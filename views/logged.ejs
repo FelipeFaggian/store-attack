@@ -1,13 +1,222 @@
 <%- include('partials/header') %>
 
-  <div class="jumbotron text-center">
-    <div class="container">
-      <i class="fas fa-key fa-6x"></i>
-      <h1 class="display-3">Parabéns!</h1>
-      <p class="secret-text">Seu acesso foi aprovado!</p>
-      <hr>
-      <a class="btn btn-light btn-lg" href="/logout" role="button">Sair</a>
-    </div>
-  </div>
+<!-- store header -->
+<!-- <header class="p-3 mb-3 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
 
-  <%- include('partials/footer') %>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="#" class="nav-link px-2 link-secondary">Visão geral</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
+        <li><a href="#" class="nav-link px-2 link-dark">Produtos</a></li>
+      </ul> -->
+
+      <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+        <input type="search" class="form-control" placeholder="Procurar..." aria-label="Search">
+      </form> -->
+
+      <!-- <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Configurações</a></li>
+          <li><a class="dropdown-item" href="#">Perfil</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Sair</a></li>
+        </ul>
+      </div> -->
+    <!-- </div>
+  </div>
+</header> -->
+
+<!-- store body -->
+<main>
+
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">O atacado feito para você!</h1>
+        <p class="lead text-body-secondary"> Navegue por nossa coleção de mercadorias construída apropriadamente para lojistas. </p>
+        <!-- <p>
+          <a href="#" class="btn btn-primary my-2">الدعوة الرئيسية للعمل</a>
+          <a href="#" class="btn btn-secondary my-2">عمل ثانوي</a>
+        </p> -->
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <!-- product 1-->
+        <div class="col">
+          <div class="card shadow-sm">
+            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" src="/public/img/estopa-carro.jpg" role="img" aria-label="Placeholder: Imagem" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Imagem</text></svg> -->
+            <img class="bd-placeholder-img card-img-top" src="img/estopa-carro.jpg" width="100%" height="225" alt="Estopa de Limpeza">
+            <div class="card-body">
+              <p class="card-text text-body-secondary"> Estopa Automativa para Polimento e Limpeza <br> 20 Pacotes (<strong>200g</strong> por Pacote)</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+                </div> -->
+                <small class="card-text lead" style="color: green;"><strong>R$ 10,00</strong></small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- product 2-->
+        <div class="col">
+          <div class="card shadow-sm">
+            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+            <img src="img/mini-fusivel.jpg" width="100%" height="225" alt="Mini Kit Fusível Automotivo">
+            <div class="card-body">
+              <p class="card-text text-body-secondary">Mini Kit Fusível Automotivo <br>20 Pacotes (<strong>1 Kit </strong>por Pacote) </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+                </div> -->
+                <small class="card-text lead" style="color: green;"><strong>R$ 20,00</strong></small>
+              </div>
+            </div>
+          </div>
+        </div>
+         <!-- product 3-->
+         <div class="col">
+          <div class="card shadow-sm">
+            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+            <img src="img/parafuso-plastico.jpg" width="100%" height="225" alt="Parafusos de Plástico para Rebites">
+            <div class="card-body">
+              <p class="card-text text-body-secondary">Parafusos Plásticos de 8mm <br>20 Pacotes (<strong>100 Unidades </strong>por Pacote) </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+                </div> -->
+                <small class="card-text lead" style="color: green;"><strong>R$ 30,00</strong></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- product 4-->
+      <div class="col">
+        <div class="card shadow-sm">
+          <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+          <img src="img/palheta-automotiva.jpg" width="100%" height="225" alt="Palheta Automotiva">
+          <div class="card-body">
+            <p class="card-text text-body-secondary">Palheta Automotiva <br>20 Pacotes (<strong>30 Unidades </strong>por Pacote) </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+              </div> -->
+              <small class="card-text lead" style="color: green;"><strong>R$ 40,00</strong></small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- product 5-->
+      <div class="col">
+        <div class="card shadow-sm">
+          <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+          <img src="img/sistema-arrefecimento.jpg" width="100%" height="225" alt="Aditivos para Sistema de Arrefecimento">
+          <div class="card-body">
+            <p class="card-text text-body-secondary">Aditivos para Sistema de Arrefecimento<br>20 Pacotes (<strong>12 Unidades </strong>por Pacote) </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+              </div> -->
+              <small class="card-text lead" style="color: green;"><strong>R$ 50,00</strong></small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- product 6-->
+      <div class="col">
+        <div class="card shadow-sm">
+          <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+          <img src="img/jogo-de-tapete-universal-automotivo.jpg" width="100%" height="225" alt="Jogo de Tapete Automotivo">
+          <div class="card-body">
+            <p class="card-text text-body-secondary">Jogo de Tapete Automotivo Universal<br>20 Pacotes (<strong>40 Unidades </strong>por Pacote) </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+              </div> -->
+              <small class="card-text lead" style="color: green;"><strong>R$ 60,00</strong></small>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- product 7-->
+       <div class="col">
+        <div class="card shadow-sm">
+          <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+          <img src="img/kit-vai-lavar-4-em-1-para-carros-luxcar.jpg" width="100%" height="225" alt="Kit Vai Lavar 4 em 1 para Carros">
+          <div class="card-body">
+            <p class="card-text text-body-secondary">Kit Vai Lavar 4 em 1 para Carros<br>20 Pacotes (<strong>1 Kit </strong>por Pacote) </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+              </div> -->
+              <small class="card-text lead" style="color: green;"><strong>R$ 65,00</strong></small>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- product 8-->
+       <div class="col">
+        <div class="card shadow-sm">
+          <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+          <img src="img/kit-10-lampadas-h7-12v-55w-comum-automotiva.jpg" width="100%" height="225" alt="Kit de Lâmpadas H7 12V 55W Comum">
+          <div class="card-body">
+            <p class="card-text text-body-secondary">Kit de Lâmpadas H7 12V 55W Comum<br>20 Pacotes (<strong>10 Unidades </strong>por Pacote) </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+              </div> -->
+              <small class="card-text lead" style="color: green;"><strong>R$ 70,00</strong></small>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- product 9-->
+       <div class="col">
+        <div class="card shadow-sm">
+          <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
+          <img src="img/suporte-veicular.png" width="100%" height="225" alt="Suporte Veicular">
+          <div class="card-body">
+            <p class="card-text text-body-secondary">Suporte Veicular para Dispositivos<br>20 Pacotes (<strong>1 Unidade </strong>por Pacote) </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
+              </div> -->
+              <small class="card-text lead" style="color: green;"><strong>R$ 75,00</strong></small>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+
+  <!-- store footer-->
+  <footer class="text-body-secondary py-5">
+    <div class="container">
+      <p class="float-end mb-1">
+        <a href="/logout"><button class="btn btn-outline-secondary">Sair</button></a>
+      </p>
+      <p class="mb-1 lead">Automultisom - © Todos os direitos reservados</p>
+      <!-- <p class="mb-0">جديد على Bootstrap؟ <a href="/"> تفضل بزيارة الصفحة الرئيسية </a> أو اقرأ <a href="/docs/5.3/getting-started/introduction/ "> دليل البدء </a>.</p> -->
+    </div>
+  </footer>
