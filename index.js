@@ -112,6 +112,12 @@ app.get("/accepted", async (req, res) => {
   console.log("User inserted on table users accepted database!");
 
   const transporter = nodemailer.createTransport({
+    host: "smtp-mail.outlook.com",
+    secureConnection: true,
+    port: 587,
+    // tls: {
+    //   ciphers: 'starttls'
+    // },
     service : process.env.EMAIL_SERVICE,
     auth : {
         user : process.env.EMAIL_USERNAME,
@@ -153,6 +159,12 @@ app.post("/register", async (req, res) => {
       //first we need to send the register email request to the boss
       //Email API's shoot email request
       const transporter = nodemailer.createTransport({
+        host: "smtp-mail.outlook.com",
+        secureConnection: true,
+        port: 587,
+        // tls: {
+        //   ciphers: 'starttls'
+        //   },
         service : process.env.EMAIL_SERVICE,
         auth : {
             user : process.env.EMAIL_USERNAME,
