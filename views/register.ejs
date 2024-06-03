@@ -1,38 +1,43 @@
 <%- include('partials/header') %>
-<div class="container mt-5">
+<div class="container mt-5 register">
   <h1>Registre-se</h1>
 
-  <div class="row">
-    <div class="col-sm-8">
-      <div class="card">
-        <div class="card-body">
+  <div class=" register" >
+    <div class="col-sm-8 register">
+      <div class="card register">
+        <div class="card-body register">
 
           <!-- Makes POST request to /register route -->
           <form action="/register" method="POST">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" name="username">
+            <div class="form-group register">
+              <label for="name">Nome</label>
+              <input type="name" class="form-control register" name="name">
             </div>
-            <div class="form-group">
+            <div class="form-group register">
               <label for="contact">Celular</label>
-              <input type="contact" class="form-control" name="contact">
+              <input type="contact" class="form-control register" name="contact">
             </div>
-            <div class="form-group">
-              <label for="cnpj">CNPJ</label>
-              <input type="cnpj" class="form-control" name="cnpj">
+            <div class="form-group register">
+              <label for="cnpj" style="padding-right: 20px;">CNPJ </label>
+              <input type="cnpj" class="form-control register" name="cnpj">
             </div>
-            <div class="form-group">
-              <label for="password">Senha</label>
-              <input type="password" class="form-control" name="password">
+            <div class="form-group register">
+              <label for="email"  style="padding-right: 20px;" >Email</label>
+              <input type="email" class="form-control register" name="username">
             </div>
-            <button type="submit" class="btn btn-dark">Solicitar Registro</button>
-           
-
+            <div class="form-group register">
+              <label for="password" style="padding-right: 15px;" >Senha</label>
+              <input type="password" class="form-control register" name="password">
+            </div>
+            <button type="submit" class="btn btn-dark register">Solicitar Registro</button>
            
           </form>
 
         </div>
+        
       </div>
+
+      <a href="/"><button style=" border: 1px solid rgb(68, 66, 66); border-radius: 5%; margin: 60px 0px;"> Retornar </button></a>
     </div>
 
     <!-- <div class="col-sm-4">
@@ -49,4 +54,4 @@
   </div>
 </div>
 
-<%- include('partials/header') %>
+<!-- <%- include('partials/footer') %> -->
