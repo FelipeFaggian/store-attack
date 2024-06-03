@@ -114,7 +114,7 @@ app.get("/accepted", async (req, res) => {
   const transporter = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
     secureConnection: true,
-    port: 587,
+    port: 443,
     // tls: {
     //   ciphers: 'starttls'
     // },
@@ -161,7 +161,7 @@ app.post("/register", async (req, res) => {
       const transporter = nodemailer.createTransport({
         host: "smtp-mail.outlook.com",
         secureConnection: true,
-        port: 587,
+        port: 443,
         // tls: {
         //   ciphers: 'starttls'
         //   },
