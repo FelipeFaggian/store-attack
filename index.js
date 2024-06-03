@@ -123,7 +123,7 @@ app.get("/accepted", async (req, res) => {
     from : process.env.EMAIL_SENDER, 
     to: email, 
     subject: "Seu Registro foi Aprovado!", 
-    html: "<h2> Seu acesso foi liberado na plataforma de lojistas da Automultisom! </h2>  <form action='http://localhost:3000/' method:'GET'> <button type='submit' "
+    html: "<h2> Seu acesso foi liberado na plataforma de lojistas da Automultisom! </h2>  <form action='https://attack-automultisom.onrender.com/' method:'GET'> <button type='submit' "
      + "> <h1> Acessar </h1> </button>  </form>"
   }
 
@@ -148,7 +148,7 @@ app.post("/register", async (req, res) => {
     ]);
 
     if (checkResult.rows.length > 0) {
-      res.send("Email already exists. Try logging in.");
+      res.send("Este e-mail já existe. Tente realizar o login.");
     } else {
       //first we need to send the register email request to the boss
       //Email API's shoot email request
@@ -165,7 +165,7 @@ app.post("/register", async (req, res) => {
         to: "felipesantosfaggian@gmail.com", 
         subject: "Requisição de Registro na Plataforma para Lojistas", 
         text: "O lojista com o email (" + email + "), contato (" + contact + ") e com CNPJ (" + cnpj + ")  está solicitando registro na plataforma!", 
-        html: "<h2> O lojista com o email (" + email + "), contato (" + contact + ") e com CNPJ (" + cnpj + ")  está solicitando registro na plataforma! </h2>  <form action='http://localhost:3000/accepted' method:'POST'> <button type='submit' "
+        html: "<h2> O lojista com o email (" + email + "), contato (" + contact + ") e com CNPJ (" + cnpj + ")  está solicitando registro na plataforma! </h2>  <form action='https://attack-automultisom.onrender.com/accepted' method:'GET'> <button type='submit' "
          + "> <h1> AUTORIZAR ACESSO </h1> </button>  </form>"
     }
 
