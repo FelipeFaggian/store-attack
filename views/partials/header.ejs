@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="pt-br" dir="ltr">
 
 <head>
   <meta charset="utf-8">
@@ -44,7 +44,7 @@
 
   .toCart {
     border-color: rgb(53, 53, 53);
-    background-color: rgb(213, 211, 211);
+    background-color: rgb(241, 241, 241);
     border-radius: 5px;
     border: 10px solid;
     color:rgb(53, 53, 53);
@@ -68,12 +68,13 @@
 
 
   .home {
-
+    background-color: rgb(241, 241, 241);
    @media (min-width: 300px) {
      
      html, body, div {
+
        color: rgb(80, 79, 79);
-       background-color: rgb(200, 199, 199);
+       background-color: rgb(241, 241, 241);
        display: flex;
        flex-direction: column;
        justify-content: center;
@@ -143,7 +144,7 @@
      
       html, body, div {
         color: rgb(78, 77, 77);
-        background-color: rgb(200, 199, 199);
+        background-color: rgb(241, 241, 241);
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -169,7 +170,7 @@
       div p {
         margin-top: 70px;
         width: 70%;
-        color: rgb(200, 199, 199);
+        background-color: rgb(241, 241, 241);
       }
 
 
@@ -230,7 +231,7 @@
       
       html, body,   div {
         color: rgb(78, 77, 77);
-        background-color: rgb(200, 199, 199);
+        background-color: rgb(241, 241, 241);
         display: flex;
         flex-direction: row;
         text-align: center;
@@ -248,7 +249,7 @@
       div p {
         margin-top: 70px;
         width: 70%;
-        color: rgb(200, 199, 199);
+        background-color: rgb(241, 241, 241);
       }
 
 
@@ -677,43 +678,41 @@
 
 
 .product {
-  
+  background-color: rgb(241, 241, 241);
   @media (min-width: 100px) { 
 
-    body, html {
-      height: 100vh;
-
+    body, html, div {
+       text-align: center;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
     }
 
-    body, html, div {
-        text-align: center;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
+    .imgButtons {
+
+      display: flex;
+      flex-direction: column-reverse;
     }
 
     h2 {
       color: rgb(51, 51, 51);
-      font-size: 50px;
-      margin: 50px 0px;
+      font-size: 20px;
+      margin: 0px 0px;
+
     }
 
     h3 {
       color: rgb(51, 51, 51);
-      font-size: 60px;
+      font-size: 30px;
       margin: 0px 0px;
     }
 
     img {
-      width: 50%;
+      width: 60%;
+      height: 70%;
       text-align: center;
       align-items: center;
-      margin: auto;
-      margin-top: 50px;
-      display: flex;
-      flex-direction: column;
       justify-content: center;
       
     }
@@ -730,19 +729,31 @@
       height: 60px;
     }
 
+    button {
+
+    }
+
+    div a {
+ 
+    }
+
     a button {
       background-color: white;
       /* color:  rgb(51, 51, 51); */
-      margin: 60px 0px;
+      margin: 10px 0px;
       padding: 20px;
-      font-size: 40px;
-      width: 300px;
+      font-size: 20px;
+    }
+
+    div .addButton {
+      
+    
     }
 
     .addButton {
-      width: 300px;
-      margin-top: 60px;
-      font-size: 40px;
+      white-space: nowrap;
+      margin-top: 10px;
+      font-size: 20px;
       color: green;
     }
 
@@ -762,45 +773,44 @@
 
     div {
       width: 100%;
+    }
+
+    footer p{
+
     }
 
   }
 
 
   @media (min-width: 700px) {
-    body, html {
-      height: 100vh;
-
-    }
 
     body, html, div {
-        text-align: center;
-        /* display: flex; */
-        /* flex-direction: column; */
-        justify-content: center;
-        align-items: center;
-        /* width: 100%; */
+       text-align: center;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
     }
 
     h2 {
       color: rgb(51, 51, 51);
-      font-size: 50px;
-      margin: 50px 0px;
+      font-size: 40px;
+      margin: 0px 0px;
     }
 
     h3 {
       color: rgb(51, 51, 51);
-      font-size: 60px;
+      font-size:50px;
       margin: 0px 0px;
     }
 
     img {
       width: 50%;
+      height: 90%;
       text-align: center;
       align-items: center;
       margin: auto;
-      margin-top: 50px;
-      display: flex;
+      margin-top: 20px;
       justify-content: center;
       
     }
@@ -817,18 +827,36 @@
       height: 60px;
     }
 
+    .fitButtons {
+      width: 30%;
+    }
+
+    .imgButtons {
+      display: flex; flex-wrap: wrap; flex-direction: row-reverse; justify-content: center; align-items: center;
+    }
+
+    .together {
+      display: flex; flex-direction: column; width: 40%; height: 100%; justify-content: space-around;
+    }
+
+    button div {
+
+    }
+
     a button {
       background-color: white;
       /* color:  rgb(51, 51, 51); */
-      margin: 60px 0px;
+      margin: 0px 0px;
       padding: 20px;
-      font-size: 40px;
+      font-size: 25px;
+      
     }
 
     .addButton {
-      margin-top: 60px;
-      font-size: 40px;
+      margin-top: 0px;
+      font-size: 25px;
       color: green;
+      
     }
 
     .addButton:hover {
@@ -841,52 +869,45 @@
       color: white;
     }
 
-    p {
-      font-size: 50px;
+    footer{
+      border: 10px solid red;  
+      font-size: 10px;
     }
 
-    div {
-      width: 100%;
-    }
+
+
   }
 
 
   @media (min-width: 992px) { 
 
-    body, html {
-      height: 100vh;
-
-    }
-
     body, html, div {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
+       text-align: center;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
     }
 
     h2 {
       color: rgb(51, 51, 51);
-      font-size: 50px;
-      margin: 50px 0px;
+      font-size: 30px;
+      margin: 0px 0px;
     }
 
     h3 {
       color: rgb(51, 51, 51);
-      font-size: 60px;
+      font-size:50px;
       margin: 0px 0px;
     }
 
     img {
-      width: 50%;
-      
+      width: 40%;
+      height: 70%;
       text-align: center;
       align-items: center;
       margin: auto;
-      margin-top: 50px;
-      display: flex;
+      margin-top: 20px;
       justify-content: center;
       
     }
@@ -903,18 +924,36 @@
       height: 60px;
     }
 
+    .fitButtons {
+      width: 30%;
+    }
+
+    .imgButtons {
+      display: flex; flex-wrap: wrap; flex-direction: row-reverse; justify-content: center; align-items: center;
+    }
+
+    .together {
+      display: flex; flex-direction: column; width: 40%; height: 100%; justify-content: start;
+    }
+
+    button div {
+
+    }
+
     a button {
       background-color: white;
       /* color:  rgb(51, 51, 51); */
-      margin: 60px 0px;
+      margin: 0px 0px;
       padding: 20px;
-      font-size: 40px;
+      font-size: 25px;
+      
     }
 
     .addButton {
-      margin-top: 60px;
-      font-size: 40px;
+      margin-top: 0px;
+      font-size: 25px;
       color: green;
+      
     }
 
     .addButton:hover {
@@ -927,18 +966,22 @@
       color: white;
     }
 
-    p {
-      font-size: 50px;
+    footer{
+      border: 10px solid red;  
+      font-size: 10px;
     }
+
 
 
   }
 }
 
+
+
   </style>
 
 </head>
 
-<body style="background-color: rgb(203, 201, 201);">
+<body style="   background-color: rgb(241, 241, 241);">
 
 

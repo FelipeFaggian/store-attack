@@ -1,42 +1,43 @@
 <%- include('partials/header') %>
 
   <!-- store body -->
-  <div class="row featurette product" style="background-color: white;">
-    <div class="col-md-7 order-md-2 product" style="margin-top: 30px;">
-      <h2 class="featurette-heading fw-normal lh-1 p-3 product"> Estopa Automativa para Polimento<br> <small>[x20 Pacotes (<strong>200g</strong> por Pacote)]</small></h2> 
-      <h3 class="p-3 product" style="color: green;" >R$ 10,00</h3>
-      <!--SDK Payment-->
-      <!-- <div id="wallet_container">
-      </div>
-      <script>
-        const mp = new MercadoPago('TEST-94cbcad2-f10d-4e1a-929a-1985dea7543e', {
-          locale: 'pt-BR'
-        });
-  
-        mp.bricks().create("wallet", "wallet_container", {
-          initialization: {
-              preferenceId: "830882078-62ae3e21-62bf-4517-9a3e-bfb5fc02b04f",
-          },
-        }); 
-    </script> -->
-    <div style="display: flex; flex-direction: column; width: 40%; text-align: start; justify-content: start;">
-      <button style="" class="p-2 addButton"> Adicionar ao Carrinho </button>
-      <a href="/logged" style=""><button style="" class="p-2 returnButton product"> Retornar </button></a>
-    </div>
-    </div>
-    <div class="col-md-5 order-md-1 product">
-      <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg> -->
-      <img class="bd-placeholder-img card-img-top product" src="img/estopa-carro.jpg" style="border: 5px solid rgb(93, 91, 91); border-radius: 5%;" width="100" height="500" alt="Estopa de Limpeza">
-    </div>
-  </div>
+  <div style=" height: 100vh; display: flex; flex-direction: column; justify-content: space-between;">
+    <div class="product" style=" background-color: rgb(241, 241, 241); width: 100%; display: flex; flex-wrap: wrap; flex-direction: row;">
+      <div class=" product" style="margin-top: 30px; ">
 
-  <!-- store footer-->
-  <footer class="text-body-secondary py-5 product" style="display: flex; justify-content: space-between; align-items: start; width: 100%; background-color: white;">
-    <div class="container product">
-      <p class="float-end mb-1">
-        <a href="/logout"><button class="btn btn-outline-secondary mb-5 product">Sair da Conta</button></a>
-      </p>
-      <p class="mb-1  product">Automultisom - © Todos os direitos reservados</p>
-      <!-- <p class="mb-0">جديد على Bootstrap؟ <a href="/"> تفضل بزيارة الصفحة الرئيسية </a> أو اقرأ <a href="/docs/5.3/getting-started/introduction/ "> دليل البدء </a>.</p> -->
+        <strong><h2 class="featurette-heading fw-normal lh-1 p-3 product"> Estopa Automativa para Polimento<br></strong> <small>x20 Pacotes (200g por Pacote)</small></h2> 
+        <div style="" class="imgButtons">
+          <div style="" class="together">
+            <h3 class="p-3 product" style="color: green;" >R$ 10,00</h3>
+            <!--SDK Payment-->
+            <!-- <div id="wallet_container">
+            </div>
+            <script>
+              const mp = new MercadoPago('TEST-94cbcad2-f10d-4e1a-929a-1985dea7543e', {
+                locale: 'pt-BR'
+              });
+        
+              mp.bricks().create("wallet", "wallet_container", {
+                initialization: {
+                    preferenceId: "830882078-62ae3e21-62bf-4517-9a3e-bfb5fc02b04f",
+                },
+              }); 
+          </script> -->
+          
+          <div class="fitButtons" style="display: flex; flex-direction: column; align-items: center; margin-top: 10px;">
+            <button style="" class="p-2 addButton"> Adicionar ao Carrinho </button>
+            <a href="/logged" style=""><button style="" class="p-2 returnButton product"> Retornar </button></a>
+          </div>
+        </div>
+        <img class="bd-placeholder-img card-img-top product" src="img/estopa-carro.jpg" style="border: 5px solid rgb(93, 91, 91); border-radius: 5%;" width="100" height="500" alt="Estopa de Limpeza">
+      </div>
+      </div>
+      <div class="col-md-5 order-md-1 product">
+        <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg> -->
+    
+      </div>
     </div>
-  </footer>
+
+    <%- include('partials/footer') %>
+
+</div>
