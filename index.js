@@ -12,6 +12,38 @@ import { neon } from '@neondatabase/serverless';
 import nn from "pg";
 import EventEmitter from 'node:events';
 
+import { MercadoPagoConfig, Preference } from 'mercadopago';
+
+        const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
+
+        const preference = new Preference(client);
+
+        const result = preference.create({
+          body: {
+            payment_methods: {
+            excluded_payment_methods: [],
+            excluded_payment_types: [],
+            installments: 12
+            },
+            items: [
+              {
+                title: 'Estopa de Polimento',
+                quantity: 1,
+                unit_price: 10
+              }
+            ],
+          }
+        })
+        .then(console.log)
+        .catch(console.log);
+      
+        const searched = await preference.search({ result });
+        const idPreference = (searched['elements'][0]['id']);
+        console.log("THE KEYS'S OBJ ARE: ", idPreference);
+      
+
+
+
 const eventEmitter = new EventEmitter();
 const { Pool } = nn;
 
@@ -82,6 +114,14 @@ app.get("/logged", (req, res) => {
   }
 });
 
+app.get("/product", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("product.ejs");
+    } else {
+    res.redirect('/login');
+  }
+});
+
 app.get("/login", (req, res) => {
   res.render("login.ejs");
 });
@@ -114,7 +154,7 @@ app.get("/accepted", async (req, res) => {
   const transporter = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
     secureConnection: true,
-    port: 443,
+    port: 578,
     // tls: {
     //   ciphers: 'starttls'
     // },
@@ -129,8 +169,9 @@ app.get("/accepted", async (req, res) => {
     from : process.env.EMAIL_SENDER, 
     to: email, 
     subject: "Seu Registro foi Aprovado!", 
-    html: "<h2> Seu acesso foi liberado na plataforma de lojistas da Automultisom! </h2>  <form action='https://attack-automultisom.onrender.com/' method:'GET'> <button type='submit' "
-     + "> <h1> Acessar </h1> </button>  </form>"
+    // html: "<h2> Seu acesso foi liberado na plataforma de lojistas da Automultisom! </h2>  <form action='http://localhost:3000/login' method:'GET'> <button type='submit' "
+    //  + "> <h1> Acessar </h1> </button>  </form>"
+    html: "<h2> Seu acesso foi liberado na plataforma de lojistas da Automultisom! </h2>  <a href='http://localhost:3000/'><button><h3> Acessar </h3></button></a>"
   }
 
   transporter.sendMail(options1, (error, info) =>{
@@ -139,6 +180,20 @@ app.get("/accepted", async (req, res) => {
   })
   console.log("Email of confirmation sended to waiting client!");
   res.render("bossConfirm.ejs");
+});
+
+app.post("/product", (req, res) => {
+ console.log("Hey! You are on product Post's block!");
+ let productId = req.body.productId;
+ console.log("The selected product's ID is: ", productId);
+
+//render the page
+ if (req.isAuthenticated()) {
+  res.render("product.ejs");
+  } else {
+  res.redirect('/login');
+}
+
 });
 
 app.post("/register", async (req, res) => {
@@ -177,7 +232,7 @@ app.post("/register", async (req, res) => {
         to: "felipesantosfaggian@gmail.com", 
         subject: "Requisição de Registro na Plataforma para Lojistas", 
         text: "O lojista com o email (" + email + "), contato (" + contact + ") e com CNPJ (" + cnpj + ")  está solicitando registro na plataforma!", 
-        html: "<h2> O lojista com o email (" + email + "), contato (" + contact + ") e com CNPJ (" + cnpj + ")  está solicitando registro na plataforma! </h2>  <form action='https://attack-automultisom.onrender.com/accepted' method:'GET'> <button type='submit' "
+        html: "<h2> O lojista com o email (" + email + "), contato (" + contact + ") e com CNPJ (" + cnpj + ")  está solicitando registro na plataforma! </h2>  <form action='http://localhost:3000/accepted' method:'GET'> <button type='submit' "
          + "> <h1> AUTORIZAR ACESSO </h1> </button>  </form>"
     }
 
@@ -254,6 +309,7 @@ app.post("/login", passport.authenticate('local', {
   // failureFlash: true
   }) 
 );
+
 
 passport.serializeUser((user, done) => {
   console.log("On seralizerUser Block!");

@@ -3,35 +3,179 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lojistas Automultisom</title>
+  
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
   <style>
+
+  .addButton {
+    margin: 15px; 
+    border-color: green;
+    background-color: white;
+    border-radius: 5px;
+    color: green;
+    font-size: x-large;
+  }
+
+  .addButton:hover {
+    background-color: green;
+    color: white;
+  }
+
+  .returnButton {
+    margin: 15px; 
+    border-color: rgb(82, 82, 82);
+    background-color: white;
+    border-radius: 5px;
+    color: rgb(82, 82, 82);
+    font-size: x-large;
+  }
+
+  .returnButton:hover {
+    background-color:rgb(82, 82, 82);
+    color: white;
+  }
+
+  .toCart {
+    border-color: rgb(53, 53, 53);
+    background-color: rgb(213, 211, 211);
+    border-radius: 5px;
+    border: 10px solid;
+    color:rgb(53, 53, 53);
+    font-size: xx-large;
+    font-weight: 900;
+    letter-spacing: 4px;
+    word-spacing: 15px;
+  }
+
+  .toCart:hover {
+    background-color:rgb(53, 53, 53);
+    color: white;
+    fill: white;
+  }
+
+  .toCart:hover svg{
+    background-color:rgb(53, 53, 53);
+    color: white;
+    fill: white;
+  }
+
+
+  .home {
+
+   @media (min-width: 300px) {
+     
+     html, body, div {
+       color: rgb(80, 79, 79);
+       background-color: rgb(200, 199, 199);
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       text-align: center;
+
+     }
+
+      small{
+       text-align: center;
+       font-size: 15px;
+       /* padding: 50px; */
+     }
+
+     p {
+       font-size: 30px;
+       text-align: center;
+       width: 80%;
+       /* padding: 5px; */
+     }
+
+     h1 {
+       font-size: 50px;
+     }
+
+     .container {
+       /* margin-bottom: 100px; */
+     }
+
+     i {
+       font-size: 100px;
+     }
+
+     button {
+     }
+
+     a {
+       text-decoration: none;
+       color: rgb(50, 49, 49);
+       border: 2px solid rgb(58, 58, 58);
+       border-radius: 5%;
+       width: 100%;
+       font-size: 25px;
+       padding: 10px 20px;
+       margin-top: 30px;
+     }
+
+     a:hover {
+        color: black;
+        background-color: white;
+        text-transform: none;
+        text-decoration: none;
+      }
+
     
-.home {
-  @media (min-width: 1px) { 
+   }
+
+
+
+    @media (min-width: 768px) {
+
+      .container {
+        padding-left: 100px;
+        padding-right: 200px;
+      }
+
+     
       html, body, div {
+        color: rgb(78, 77, 77);
         background-color: rgb(200, 199, 199);
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: space-around;
         align-items: center;
-        height: 100vh;
-        font-size: 60px;
         text-align: center;
+        flex-wrap: nowrap;
+      }
+
+       small{
+        text-align: center;
+        font-size: 15px;
+        /* padding: 50px; */
       }
 
       p {
-        font-size: 50px;
+        font-size: 30px;
         text-align: center;
-        padding: 20px;
+        /* padding: 5px; */
+
+
       }
 
+      div p {
+        margin-top: 70px;
+        width: 70%;
+        color: rgb(200, 199, 199);
+      }
+
+
       h1 {
-        font-size: 100px;
+        font-size: 40px;
+        text-align: center;
+        width: 100%;
       }
 
       .container {
@@ -39,71 +183,30 @@
       }
 
       i {
-        margin-top: 50px;
-        font-size: 200px;
+        font-size: 50px;
+      }
+
+      button {
       }
 
       a {
+        white-space: nowrap;
         text-decoration: none;
         color: rgb(50, 49, 49);
         border: 2px solid rgb(58, 58, 58);
         border-radius: 5%;
-        margin-bottom: 50px;
-        font-size: 50px;
-        padding: 20px 40px;
+        font-size: 30px;
+        padding: 10px 20px;
+        margin-top: 30px;
       }
 
-      footer p {
-        text-align: center;
+       small {
         font-size: 20px;
-        padding: 50px;
-      }
-    }
-
-
-    @media (min-width: 768px) {
-      html, body, div {
-        background-color: rgb(200, 199, 199);
-      }
-    }
-
-
-    @media (min-width: 992px) { 
-      html, body, div {
-        background-color: rgb(200, 199, 199);
-      }
-    }
-
-
-    @media (min-width: 1000px) { 
-      html, body, div {
-        background-color: rgb(200, 199, 199);
+        text-align: center;
         display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: center;
-        height: 100vh;
-        font-size: large;
-      }
-
-      h1 {
-        font-size: 50px;
-      }
-
-      p {
-        font-size: 30px;
-      }
-
-      i {
-        font-size: 100px;
-      }
-
-      a {
-        border: 2px solid rgb(82, 81, 81);
-        border-radius: 5%;
-        margin-bottom: 10px;
-        padding: 10px 30px;
-        font-size: 30px;
+        margin: auto;
+        
       }
 
       a:hover {
@@ -113,16 +216,197 @@
         text-decoration: none;
       }
 
-      footer p {
-        font-size: 10px;
+     
+    }
+
+    @media (min-width: 900px) { 
+
+      .container {
+        padding-left: 60px;
+        padding-right: 200px;
+      }
+
+      
+      html, body,   div {
+        color: rgb(78, 77, 77);
+        background-color: rgb(200, 199, 199);
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        flex-wrap: nowrap;
+      }
+
+      div {
+        margin-top: 50px;
+      }
+
+      div a {
+        margin-top: 50px;
+      }
+
+      div p {
+        margin-top: 70px;
+        width: 70%;
+        color: rgb(200, 199, 199);
+      }
+
+
+       small{
+        text-align: center;
+        font-size: 15px;
+        /* padding: 50px; */
+      }
+
+      p {
+        margin: auto;
+        font-size: 40px;
+        width: 40%;
+        text-align: center;
+        /* padding: 5px; */
+      }
+
+      h1 {
+        font-size: 70px;
+      }
+
+      .container {
+      }
+
+      i {
+        font-size: 150px;
+      }
+
+      button {
+      }
+
+      a {
+        text-decoration: none;
+        color: rgb(50, 49, 49);
+        border: 2px solid rgb(58, 58, 58);
+        border-radius: 5%;
+        font-size: 30px;
+        padding: 10px 20px;
+        margin-top: 30px;
+        width: 100%;
+        flex-wrap: nowrap;
+        white-space: nowrap
+      }
+
+       small {
+        font-size: 20px;
         text-align: center;
         display: flex;
         justify-content: center;
         margin: auto;
-
+        
       }
+
+      a:hover {
+        color: black;
+        background-color: white;
+        text-transform: none;
+        text-decoration: none;
+      }
+
     }
-}
+
+    @media (min-width: 1000px) { 
+      
+      .container {
+        padding-left: 100px;
+        padding-right: 200px;
+      }
+
+      html, body,   div {
+        color: rgb(78, 77, 77);
+        background-color: rgb(200, 199, 199);
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+      }
+
+      div {
+        margin-top: 50px; 
+      }
+
+      div i {
+        
+      }
+
+      div a {
+        margin-top: 50px;
+      }
+
+      div p {
+        margin-top: 70px;
+        width: 70%;
+      }
+
+
+       small{
+        text-align: center;
+        font-size: 15px;
+        /* padding: 50px; */
+      }
+
+      p {
+        margin: auto;
+        font-size: 40px;
+        width: 40%;
+        text-align: center;
+        /* padding: 5px; */
+      }
+
+      h1 {
+        font-size: 70px;
+      }
+
+      .container {
+      }
+
+      i {
+        font-size: 150px;
+      
+      }
+
+      button {
+      }
+
+      a {
+        text-decoration: none;
+        color: rgb(50, 49, 49);
+        border: 2px solid rgb(58, 58, 58);
+        border-radius: 5%;
+        font-size: 30px;
+        padding: 10px 20px;
+        margin-top: 30px;
+        width: 100%;
+        flex-wrap: nowrap;
+        white-space: nowrap
+      }
+
+       small {
+        font-size: 20px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        
+      }
+
+      a:hover {
+        color: black;
+        background-color: white;
+        text-transform: none;
+        text-decoration: none;
+      }
+
+    }
+
+  }
 
 .register {
   
@@ -255,6 +539,265 @@
         margin-right: 30px;
       }
     }
+}
+
+.product {
+  
+  @media (min-width: 100px) { 
+
+    body, html {
+      height: 100vh;
+
+    }
+
+    body, html, div {
+        text-align: center;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    h2 {
+      color: rgb(51, 51, 51);
+      font-size: 50px;
+      margin: 50px 0px;
+    }
+
+    h3 {
+      color: rgb(51, 51, 51);
+      font-size: 60px;
+      margin: 0px 0px;
+    }
+
+    img {
+      width: 50%;
+      text-align: center;
+      align-items: center;
+      margin: auto;
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+    }
+
+    label {
+      margin: 10px 0px;
+      font-size: 50px;
+      color: rgb(51, 51, 51);
+    }
+
+    input {
+      margin: 10px 0px;
+      border: 2px solid rgb(51, 51, 51);
+      height: 60px;
+    }
+
+    a button {
+      background-color: white;
+      /* color:  rgb(51, 51, 51); */
+      margin: 60px 0px;
+      padding: 20px;
+      font-size: 40px;
+      width: 300px;
+    }
+
+    .addButton {
+      width: 300px;
+      margin-top: 60px;
+      font-size: 40px;
+      color: green;
+    }
+
+    .addButton:hover {
+      color: white;
+      background-color: green;
+    }
+
+    button:hover {
+      background-color:  rgb(51, 51, 51);
+      color: white;
+    }
+
+    p {
+      font-size: 50px;
+    }
+
+    div {
+      width: 100%;
+    }
+
+  }
+
+
+  @media (min-width: 700px) {
+    body, html {
+      height: 100vh;
+
+    }
+
+    body, html, div {
+        text-align: center;
+        /* display: flex; */
+        /* flex-direction: column; */
+        justify-content: center;
+        align-items: center;
+        /* width: 100%; */
+    }
+
+    h2 {
+      color: rgb(51, 51, 51);
+      font-size: 50px;
+      margin: 50px 0px;
+    }
+
+    h3 {
+      color: rgb(51, 51, 51);
+      font-size: 60px;
+      margin: 0px 0px;
+    }
+
+    img {
+      width: 50%;
+      text-align: center;
+      align-items: center;
+      margin: auto;
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      
+    }
+
+    label {
+      margin: 10px 0px;
+      font-size: 50px;
+      color: rgb(51, 51, 51);
+    }
+
+    input {
+      margin: 10px 0px;
+      border: 2px solid rgb(51, 51, 51);
+      height: 60px;
+    }
+
+    a button {
+      background-color: white;
+      /* color:  rgb(51, 51, 51); */
+      margin: 60px 0px;
+      padding: 20px;
+      font-size: 40px;
+    }
+
+    .addButton {
+      margin-top: 60px;
+      font-size: 40px;
+      color: green;
+    }
+
+    .addButton:hover {
+      color: white;
+      background-color: green;
+    }
+
+    button:hover {
+      background-color:  rgb(51, 51, 51);
+      color: white;
+    }
+
+    p {
+      font-size: 50px;
+    }
+
+    div {
+      width: 100%;
+    }
+  }
+
+
+  @media (min-width: 992px) { 
+
+    body, html {
+      height: 100vh;
+
+    }
+
+    body, html, div {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    h2 {
+      color: rgb(51, 51, 51);
+      font-size: 50px;
+      margin: 50px 0px;
+    }
+
+    h3 {
+      color: rgb(51, 51, 51);
+      font-size: 60px;
+      margin: 0px 0px;
+    }
+
+    img {
+      width: 50%;
+      
+      text-align: center;
+      align-items: center;
+      margin: auto;
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      
+    }
+
+    label {
+      margin: 10px 0px;
+      font-size: 50px;
+      color: rgb(51, 51, 51);
+    }
+
+    input {
+      margin: 10px 0px;
+      border: 2px solid rgb(51, 51, 51);
+      height: 60px;
+    }
+
+    a button {
+      background-color: white;
+      /* color:  rgb(51, 51, 51); */
+      margin: 60px 0px;
+      padding: 20px;
+      font-size: 40px;
+    }
+
+    .addButton {
+      margin-top: 60px;
+      font-size: 40px;
+      color: green;
+    }
+
+    .addButton:hover {
+      color: white;
+      background-color: green;
+    }
+
+    button:hover {
+      background-color:  rgb(51, 51, 51);
+      color: white;
+    }
+
+    p {
+      font-size: 50px;
+    }
+
+
+  }
 }
 
   </style>
