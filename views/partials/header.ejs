@@ -68,7 +68,6 @@
 
 
   .home {
-    background-color: rgb(241, 241, 241);
    @media (min-width: 300px) {
      
      html, body, div {
@@ -503,14 +502,14 @@
 
       h1 {
         color: rgb(51, 51, 51);
-        font-size: 50px;
+        font-size: 30px;
         margin: 0px 0px;
         padding: 5px 10px;
       }
 
       label {
         margin-top:2px; 
-        font-size: 30px;
+        font-size: 20px;
         color: rgb(51, 51, 51);
         width: auto;
       }
@@ -692,7 +691,7 @@
     .imgButtons {
 
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
 
     h2 {
@@ -709,8 +708,8 @@
     }
 
     img {
-      width: 60%;
-      height: 70%;
+      width: 300px;
+      height: 300px;
       text-align: center;
       align-items: center;
       justify-content: center;
@@ -762,6 +761,11 @@
       background-color: green;
     }
 
+    .together {
+      display: flex; 
+      flex-direction: column-reverse;
+    }
+
     button:hover {
       background-color:  rgb(51, 51, 51);
       color: white;
@@ -805,8 +809,8 @@
     }
 
     img {
-      width: 50%;
-      height: 90%;
+      width: 300px;
+      height: 300px;
       text-align: center;
       align-items: center;
       margin: auto;
@@ -832,11 +836,18 @@
     }
 
     .imgButtons {
-      display: flex; flex-wrap: wrap; flex-direction: row-reverse; justify-content: center; align-items: center;
+      display: flex; 
+      flex-wrap: wrap;
+      flex-direction: row-reverse; 
+      justify-content: center; 
+      align-items: center;
     }
 
     .together {
-      display: flex; flex-direction: column; width: 40%; height: 100%; justify-content: space-around;
+      display: flex; 
+      flex-direction: column-reverse; 
+      width: 40%; height: 100%;
+       justify-content: space-around;
     }
 
     button div {
@@ -902,8 +913,8 @@
     }
 
     img {
-      width: 40%;
-      height: 70%;
+      width: 300px;
+      height: 300px;
       text-align: center;
       align-items: center;
       margin: auto;
@@ -926,14 +937,20 @@
 
     .fitButtons {
       width: 30%;
+    
     }
 
     .imgButtons {
-      display: flex; flex-wrap: wrap; flex-direction: row-reverse; justify-content: center; align-items: center;
+    
     }
 
     .together {
-      display: flex; flex-direction: column; width: 40%; height: 100%; justify-content: start;
+      display: flex; 
+      flex-direction: row-reverse;
+       width: 100%; 
+       height: 100%; 
+       justify-content: center;
+       align-items: center;
     }
 
     button div {

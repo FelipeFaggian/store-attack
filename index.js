@@ -182,14 +182,64 @@ app.get("/accepted", async (req, res) => {
   res.render("bossConfirm.ejs");
 });
 
-app.post("/product", (req, res) => {
+//array product
+let item = [
+  { id: 1, name: "Estopa Automativa para Polimento", description: "x20 Pacotes (200g por Pacote)" , url_img: 'img/estopa-carro.jpg', price: "R$ 10,00" },
+  { id: 2, name: "Mini Kit Fusível Automotivo", description: "20 Pacotes (1 Kit por Pacote)" , url_img: 'img/mini-fusivel.jpg', price: "R$ 20,00" },
+  { id: 3, name: "Parafusos Plásticos de 8mm", description: "20 Pacotes (100 Unidades por Pacote)" , url_img: 'img/parafuso-plastico.jpg', price: "R$ 30,00" },
+  { id: 4, name: "Palheta Automotiva", description: "20 Pacotes (30 Unidades por Pacote)" , url_img: 'img/palheta-automotiva.jpg', price: "R$ 40,00" },
+  { id: 5, name: "Aditivos para Sistema de Arrefecimento", description: "20 Pacotes (12 Unidades por Pacote)" , url_img: 'img/sistema-arrefecimento.jpg', price: "R$ 50,00" },
+  { id: 6, name: "Jogo de Tapete Automotivo Universal", description: "20 Pacotes (40 Unidades por Pacote)" , url_img: 'img/jogo-de-tapete-universal-automotivo.jpg', price: "R$ 60,00" },
+  { id: 7, name: "Kit Vai Lavar 4 em 1 para Carros", description: "20 Pacotes (1 Kit por Pacote)" , url_img: 'img/kit-vai-lavar-4-em-1-para-carros-luxcar.jpg', price: "R$ 65,00" },
+  { id: 8, name: "Kit de Lâmpadas H7 12V 55W Comum", description: "20 Pacotes (10 Unidades por Pacote)" , url_img: 'img/kit-10-lampadas-h7-12v-55w-comum-automotiva.jpg', price: "R$ 70,00" },
+  { id: 9, name: "Suporte Veicular para Dispositivos", description: "20 Pacotes (1 Unidade por Pacote)" , url_img: 'img/suporte-veicular.png', price: "R$ 75,00" },
+];
+
+//recover products's data
+// async function checkItem() {
+//   const result = await pool.query(
+//       `SELECT * FROM product ORDER BY id ASC;`
+//       );
+//   item = [];
+//   result.rows.forEach((items) => {
+//       item.push(items);
+//   });
+//   return item;
+//   };
+
+//temporary vars
+let nameView = null;
+let descriptionView = null;
+let priceView = null;
+let imgView = null;
+let idView = null;
+//clicked button to be rendered!
+app.post("/product", async (req, res) => {
  console.log("Hey! You are on product Post's block!");
  let productId = req.body.productId;
  console.log("The selected product's ID is: ", productId);
-
+ console.log("The values in product's array are: ", item);
+  //  const item = await checkItem();
+  for (var i = 0; i<item.length; i++) {
+    if (item[i].id == productId) {
+        nameView = item[i].name;
+        descriptionView = item[i].description;
+        priceView = item[i].price;
+        imgView = item[i].url_img;
+        idView = item[i].id;
+    }
+  };
 //render the page
  if (req.isAuthenticated()) {
-  res.render("product.ejs");
+  console.log("The product clicked's name is: "+ nameView + " your description is: " + descriptionView + " and the price is: " + priceView +
+  " aaand your idView is: " + idView);
+  
+  res.render('product.ejs', { 
+    nameView: nameView, priceView: priceView, imgView: imgView, descriptionView: descriptionView
+  });
+    
+  console.log("Rendering the Page...");
+
   } else {
   res.redirect('/login');
 }
