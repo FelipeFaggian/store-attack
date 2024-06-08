@@ -1,0 +1,67 @@
+<%- include('partials/header') %>
+
+<!-- cart body -->
+<div style="" class="cart">
+    <div style="" class="cart">
+        
+        <ul style=" " class="cart">
+          
+            <% if (lengthCart > 0) { %>
+                <h2 style="" class="cart"> Items adicionados ao Carrinho: </h2>
+                <% for(var i = 0; i<productsCart.length; i++) { %> 
+                
+                <li style=" " class="cart">            
+                
+                            <form action="/cartItems" method="POST">
+                            <div style="" class="cart">
+                                <input name="productName" readonly style="" class="cart inputRead" value=" <%= productsCart[i]['productname'] %> ">
+                                <input name="productDescription" readonly style="" class="cart inputRead" value="<%= productsCart[i]['productdescription'] %>" >
+                                <label for="productQuantity" class="cart"> Quantidade de remessas:  </label>
+                                <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>" type="quantity" id="quantityInput" class="cart" name="quantity" style="">
+                                <button name="submitButton" value="save" type="submit" class="cart" style=" "> Salvar remessas</button>
+                            </div>
+                            
+                                <button name="submitButton" value="delete" type="submit" class="cart" id="deleteButton" style=""> Tirar Item do Carrinho </button>
+                            </form>
+                
+                </li>         
+
+                <% } %>
+            <% }  else { %>
+                    <h2 class="cart"> Não há itens no carrinho. </h2>
+                    <p style=""  class="cart" > Navegue por nossa coleção! </p>
+                    <% } %>   
+        </ul> 
+    </div>
+    <!-- Checkout -->
+    <% if (lengthCart > 0) { %>
+    <div style="" class="cart" id="meliDiv">
+             <!--SDK Payment-->
+             <div id="wallet_container" class="cart" style=""></div>
+             <script>
+                 const mp = new MercadoPago('TEST-94cbcad2-f10d-4e1a-929a-1985dea7543e', {
+                 locale: 'pt-BR'
+                 });
+     
+                 mp.bricks().create("wallet", "wallet_container", {
+                 initialization: {
+                    //  preferenceId: "830882078-62ae3e21-62bf-4517-9a3e-bfb5fc02b04f",
+                    preferenceId: "<%=  idPreference %>",
+                 },
+                 }); 
+             </script>
+    </div>
+     <% } %>
+    <!-- Return -->
+    <div style="display: flex; align-items: center; justify-content: center;" class="cart">
+        <a href="/logged" class="cart"><button class="" style="">Ver mais produtos</button></a>
+    </div>        
+
+</div>
+
+
+
+
+
+
+<!-- <%- include('partials/footer') %> -->

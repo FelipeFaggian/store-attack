@@ -4,12 +4,12 @@
   <div style=" height: 100vh; display: flex; flex-direction: column;">
     <div class="product" style=" background-color: rgb(241, 241, 241); display: flex; flex-wrap: wrap; flex-direction: row;">
       <div class=" product" style="">
-
-        <strong><h2 class="p-3 product"> <%= nameView %><br></strong> <small> <%= descriptionView %> </small></h2> 
+        <form action="/cart" method="POST">  
+        <strong><h2 class="p-3 product" name="productName" value=" <%= nameView %> "> <%= nameView %><br></strong> <small> <%= descriptionView %> </small></h2> 
         <div style=" display: flex; justify-content: center; text-align: center; width: 100%; flex-direction: row;" class="imgButtons product">
           <div style="" class="together product">
-            <div style=" width: auto;">
-                  <h3 class="p-3 product" style="color: green;"><%= priceView %></h3>
+            <div class="priceButtons" style=" width: auto;">
+                  <h3 class="p-3 product" style="color: green;"> R$ <%= priceView %>,00</h3>
                   <!--SDK Payment-->
                   <!-- <div id="wallet_container">
                   </div>
@@ -26,7 +26,9 @@
                 </script> -->
                 
                 <div class="fitButtons" style="display: flex; flex-direction: column; align-items: center; margin-top: 10px;">
-                  <button style="" class="p-2 addButton"> Adicionar ao Carrinho </button>
+                 
+                    <a href="/cart"><button type="submit" style="margin-bottom: 10px;" class="p-2 addButton"> Adicionar ao Carrinho </button></a>
+                  </form>
                   <a href="/logged" style=""><button style="" class="p-2 returnButton product"> Retornar </button></a>
                 </div>
               </div>
@@ -39,6 +41,6 @@
    
     </div>
 
-    <%- include('partials/footer') %>
+    <!-- <%- include('partials/footer') %> -->
 
 </div>

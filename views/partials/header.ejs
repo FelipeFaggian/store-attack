@@ -935,13 +935,16 @@
       height: 60px;
     }
 
+    .priceButtons {
+      margin-left: 20px;
+    }
+
     .fitButtons {
       width: 30%;
-    
     }
 
     .imgButtons {
-    
+      
     }
 
     .together {
@@ -951,6 +954,7 @@
        height: 100%; 
        justify-content: center;
        align-items: center;
+       
     }
 
     button div {
@@ -963,14 +967,13 @@
       margin: 0px 0px;
       padding: 20px;
       font-size: 25px;
-      
     }
 
     .addButton {
       margin-top: 0px;
       font-size: 25px;
       color: green;
-      
+      margin-bottom: 10px;
     }
 
     .addButton:hover {
@@ -993,6 +996,254 @@
   }
 }
 
+.cart {
+ 
+  @media (min-width: 100px) { 
+
+    p {
+      font-weight: 900;
+      font-size: 20px ;
+    }
+    
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgb(51, 51, 51);
+      width: 300px;
+      margin: auto;
+      border-radius: 5px;
+    }
+
+    h2 {
+      color: rgb(51, 51, 51);
+      padding: 10px;
+      font-weight: 900;
+    }
+
+    .inputRead {
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      color: rgb(51, 51, 51);
+      background-color: rgb(241, 241, 241);
+      border: 1px solid rgb(241, 241, 241);
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    button {
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+    }
+
+    #meliDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  button:hover {
+    background-color:  rgb(51, 51, 51);
+    color: white;
+  }
+
+  label {
+    font-weight: 900;
+    font-size: 15px;
+  }
+
+    #quantityInput {
+      width: 35px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    #deleteButton {
+      width: 80%;
+      margin-top: 10px;
+    }
+
+   ul {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    padding-right: 30px;
+   }
+    
+  }
+
+
+  @media (min-width: 700px) {
+
+    
+    p {
+      font-weight: 900;
+      font-size: 20px ;
+    }
+    
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgb(51, 51, 51);
+      width: 600px;
+      margin: auto;
+      border-radius: 5px;
+    }
+
+    h2 {
+      color: rgb(51, 51, 51);
+      padding: 10px;
+      font-weight: 900;
+    }
+
+    .inputRead {
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      color: rgb(51, 51, 51);
+      background-color: rgb(241, 241, 241);
+      border: 1px solid rgb(241, 241, 241);
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    button {
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    #meliDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+  button:hover {
+    background-color:  rgb(51, 51, 51);
+    color: white;
+  }
+
+  label {
+    font-weight: 900;
+    font-size: 20px;
+  }
+
+    #quantityInput {
+      width: 60px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    #deleteButton {
+      width: 80%;
+      margin-top: 10px;
+    }
+
+   ul {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    padding-right: 30px;
+   }
+
+  }
+
+
+  @media (min-width: 992px) { 
+    p {
+      font-weight: 900;
+      font-size: 20px ;
+    }
+    
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgb(51, 51, 51);
+      width: 600px;
+      margin: auto;
+      border-radius: 5px;
+    }
+
+    h2 {
+      color: rgb(51, 51, 51);
+      padding: 10px;
+      font-weight: 900;
+    }
+
+    .inputRead {
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      color: rgb(51, 51, 51);
+      background-color: rgb(241, 241, 241);
+      border: 1px solid rgb(241, 241, 241);
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    button {
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    #meliDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+  button:hover {
+    background-color:  rgb(51, 51, 51);
+    color: white;
+  }
+
+  label {
+    font-weight: 900;
+    font-size: 20px;
+  }
+
+    #quantityInput {
+      width: 60px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    #deleteButton {
+      width: 80%;
+      margin-top: 10px;
+    }
+
+   ul {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+    padding-right: 30px;
+   }
+   
+  }
+}
 
 
   </style>
