@@ -15,32 +15,6 @@ import NodeCache from 'node-cache';
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { render } from "ejs";
 
-// const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
-// const preference = new Preference(client);
-
-//         const result = preference.create({
-//           body: {
-//             payment_methods: {
-//             excluded_payment_methods: [],
-//             excluded_payment_types: [],
-//             installments: 12
-//             },
-//             items: [
-//               {
-//                 title: 'Estopa de Polimento',
-//                 quantity: 1,
-//                 unit_price: 10
-//               }
-//             ],
-//           }
-//         })
-//         .then(console.log)
-//         .catch(console.log);
-      
-//         const searched = await preference.search({ result });
-//         const idPreference = (searched['elements'][0]['id']);
-//         console.log("THE VALUE'S OBJ IS: ", idPreference);
-    
 //trying drive the email to the cart page
 let userEmail = null;        
 
@@ -94,9 +68,10 @@ getData();
 
 //gateways
 app.get("/", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("secrets.ejs");
+  if (req.isAuthenticated()) {   
+    res.redirect("/logged");
     } else {
+
     res.render("home.ejs");
   }
 });
@@ -131,6 +106,16 @@ app.get("/product", (req, res) => {
   }
 });
 
+app.post("/exitCart", (req, res) => {
+  if (req.isAuthenticated()) {
+    console.log("We are inside de exitCart's post block!");
+
+    res.redirect("/logged");
+    } else {
+    res.redirect('/login');
+  }
+});
+
 app.post("/cartItems", async (req, res) => {
   if (req.isAuthenticated()) {
     console.log("The POST BLOCK cartItems was activeted!!!");
@@ -142,6 +127,7 @@ app.post("/cartItems", async (req, res) => {
     console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", userEmail.trim());
     if (req.body.submitButton == 'save') {
       console.log("You entered inside if block of the save button!");
+      if (getQuantity > 0) {
       console.log("Starting update quantity's product process!");
       const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
         [getQuantity, getName.trim(), userEmail.trim(), getDescription.trim()]);
@@ -161,6 +147,9 @@ app.post("/cartItems", async (req, res) => {
         console.log("The insertIndividual var's length value is: ", insertIndividual);
       }
     } else {
+      console.log("Invalid value to be updated!");
+    }
+    }  if (req.body.submitButton == 'delete') {
       console.log("You entered in else block of the delete button!");
       console.log("Starting update quantity's product process!");
       const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
@@ -207,46 +196,72 @@ app.get("/cart", async (req, res) => {
   if (req.isAuthenticated()) {
     console.log("Hey! You are in GET BLOCK cart's page!");
     //rendering ckeckout's client
-    const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
-    const preference = new Preference(client);
-    let items = [
-      {
-        title: 'Estopa de Polimento',
-        quantity: 1,
-        unit_price: 10
-      }
-    ];
-    //fill array items with carts's client products!
-    items = [];
     const recoveryCart = await db.query(`SELECT * FROM cart WHERE clientemail = $1`,
       [userEmail]
     );
+    let idPreference = null;
+    console.log("We are starting the checkout's construction process. For while, the idPreference = ", idPreference);
+    if (recoveryCart.rows.length > 0) {
     console.log("The cart of the user ", userEmail, " was recovered: ", recoveryCart );
+    const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
+    const preference = new Preference(client);
+    let items = [
+      // {
+      //   title: 'Estopa de Polimento',
+      //   quantity: 1,
+      //   unit_price: 10
+      // }
+    ];
+    //fill array items with carts's client products!
+    items = [];
+    console.log("Starting loop to refresh the items obj!");
+    for (var i = 0; i < recoveryCart.rows.length; i ++) {
+      console.log("A item was founded in client's cart! ");
+      console.log("The product founded's name is: ", recoveryCart.rows[i]['productname']);
+      console.log("The product founded's price is: ", recoveryCart.rows[i]['productprice']);
+      console.log("The product founded's quantity is: ", recoveryCart.rows[i]['productquantity']);
+      console.log("The dolar sign was getted out of the money's value: ", recoveryCart.rows[i]['productprice']);
+      items.push({
+        title: recoveryCart.rows[i]['productname'],
+        quantity:  recoveryCart.rows[i]['productquantity'],
+        unit_price: recoveryCart.rows[i]['productprice']
+      });
+      console.log("The array items recevei a new filled position! Lets see: ", items);
+    }
     //generating id preference by the items array
-        const resultPreference = preference.create({
+    console.log("We finally get out from loop's scope. Lets see if we yet have our items's var: ", items);
+    console.log("FIRST LINE 1!"); 
+     
+      const resultPreference = await preference.create({
           body: {
             payment_methods: {
             excluded_payment_methods: [],
             excluded_payment_types: [],
             installments: 12
-            },
-            // items: [
-            //   {
-            //     title: 'Estopa de Polimento',
-            //     quantity: 1,
-            //     unit_price: 10
-            //   }
-            // ],
+            },     
             items,
           }
-        })
-        .then(console.log)
-        .catch(console.log);
-      
-        const searched = await preference.search({ resultPreference });
-        const idPreference = (searched['elements'][0]['id']);
-        console.log("THE VALUE'S OBJ IS: ", idPreference);
+        });
 
+        // .then(console.log)
+        // .catch(console.log);
+        console.log("SECOND LINE 2!"); 
+        console.log("resultPreference['id'] pleas? ", resultPreference['id']);
+        idPreference = resultPreference['id'];
+        // const options = {
+        //   offset: 0,
+        //   limit: 2
+        // };
+        // const searchedOptions = await preference.search({ options });
+        // console.log("The searchedOptions's value is: ", searchedOptions);
+        // const searched = await preference.search({ resultPreference });
+        // console.log( "CONST SEARCHED VLAUE: ", searched );
+        // console.log("The seached value is: ", searched);
+        // const idPreference = (searched['elements'][0]['id']);
+        console.log("The refresh ID's value from the cart's product to checkout is: ", idPreference);
+      } else {
+        "The render checkout was not consumed because the cart is empty!"
+      }
     //rendering the products of client's cart...
     const result = await db.query(`SELECT * FROM cart WHERE clientemail = $1`,
       [userEmail]
@@ -256,7 +271,7 @@ app.get("/cart", async (req, res) => {
     // console.log("Starting for loop with length equal to: ", result.rows.length);
     productsCart = [];
     let lengthCart = result.rows.length;
-    console.log("The lengthCart's vlaue is: ", lengthCart);
+    console.log("The lengthCart's value is: ", lengthCart);
     for (var i = 0; i < result.rows.length; i++) {
       if (result.rows[i]['clientemail'] == userEmail) {
         // console.log("The for loop find a user's product!");
@@ -267,9 +282,13 @@ app.get("/cart", async (req, res) => {
       }
     }
 
+    //test function to keypress event
+    function keyPressed() {
+      console.log("Keypressed!");
+    }
     // console.log("The FINAL array of the productsCart is: ", productsCart);
     //rendering the page...
-    res.render("cart.ejs", {lengthCart: lengthCart, idPreference: idPreference.trim(), productsCart: productsCart, userEmail: userEmail, nameView: nameView, descriptionView: descriptionView, priceView: priceView });
+    res.render("cart.ejs", {keyPressed: keyPressed() ,lengthCart: lengthCart, idPreference: idPreference, productsCart: productsCart, userEmail: userEmail, nameView: nameView, descriptionView: descriptionView, priceView: priceView });
     } else {
     // console.log("Sorry! You arent authenticated!");
     res.redirect('/login');
@@ -350,24 +369,13 @@ let item = [
   { id: 9, name: "Suporte Veicular para Dispositivos", description: "20 Pacotes (1 Unidade por Pacote)" , url_img: 'img/suporte-veicular.png', price: "75" },
 ];
 
-//recover products's data
-// async function checkItem() {
-//   const result = await pool.query(
-//       `SELECT * FROM product ORDER BY id ASC;`
-//       );
-//   item = [];
-//   result.rows.forEach((items) => {
-//       item.push(items);
-//   });
-//   return item;
-//   };
-
 //temporary vars
 let nameView = null;
 let descriptionView = null;
 let priceView = null;
 let imgView = null;
 let idView = null;
+
 //clicked button to be rendered!
 app.post("/product", async (req, res) => {
  console.log("Hey! You are on product Post's block!");

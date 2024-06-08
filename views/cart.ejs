@@ -1,5 +1,34 @@
 <%- include('partials/header') %>
 
+
+<script>
+    document.getElementById("quantityInput").addEventListener("keyup", myFunction());
+
+async function myFunction() {
+//   alert("The update quantity was concluded!");
+  let x = document.getElementById("quantityInput");
+  let y = document.getElementById("productName");
+  let w = document.getElementById("productDescription");
+  //   x.value = alert(x.value.toUpperCase());
+  //   x.value = otherFunction();
+//   console.log("Starting update quantity's product process!");
+//   newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
+//         [x, y.trim(), userEmail.trim(), w.trim()]);
+//   alert("I hope!");
+  x.value = x.value;
+  y.value = y.value;
+  w.value = w.value;
+  // Trigger the button element with a click
+  if (x.value > 0){
+        document.getElementById("saveButton").click();
+    }
+//   alert("The button save was clicked!!");
+}
+// function otherFunction() {
+//     alert("You entered some value inside this input, I see.");
+// }
+</script>
+
 <!-- cart body -->
 <div style="" class="cart">
     <div style="" class="cart">
@@ -14,11 +43,12 @@
                 
                             <form action="/cartItems" method="POST">
                             <div style="" class="cart">
-                                <input name="productName" readonly style="" class="cart inputRead" value=" <%= productsCart[i]['productname'] %> ">
-                                <input name="productDescription" readonly style="" class="cart inputRead" value="<%= productsCart[i]['productdescription'] %>" >
+                                <input name="productName" readonly style="" class="cart inputRead" id="productName" value=" <%= productsCart[i]['productname'] %> ">
+                                <input name="productDescription" readonly style="" class="cart inputRead" id="productDescription" value="<%= productsCart[i]['productdescription'] %>" >
+                                <!-- <input name="productPrice" readonly style="" class="cart inputRead" id="productPrice" value="<%= productsCart[i]['productprice'] %>" > -->
                                 <label for="productQuantity" class="cart"> Quantidade de remessas:  </label>
-                                <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>" type="quantity" id="quantityInput" class="cart" name="quantity" style="">
-                                <button name="submitButton" value="save" type="submit" class="cart" style=" "> Salvar remessas</button>
+                                <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>"  type="numbers" onkeyup="myFunction()" id="quantityInput" class="cart" name="quantity" style="">
+                                <button name="submitButton" id="saveButton" value="save" type="submit" class="cart" style=" "> Salvar remessas </button>
                             </div>
                             
                                 <button name="submitButton" value="delete" type="submit" class="cart" id="deleteButton" style=""> Tirar Item do Carrinho </button>
@@ -33,8 +63,9 @@
                     <% } %>   
         </ul> 
     </div>
-    <!-- Checkout -->
+
     <% if (lengthCart > 0) { %>
+    <!-- Checkout -->
     <div style="" class="cart" id="meliDiv">
              <!--SDK Payment-->
              <div id="wallet_container" class="cart" style=""></div>
@@ -45,7 +76,6 @@
      
                  mp.bricks().create("wallet", "wallet_container", {
                  initialization: {
-                    //  preferenceId: "830882078-62ae3e21-62bf-4517-9a3e-bfb5fc02b04f",
                     preferenceId: "<%=  idPreference %>",
                  },
                  }); 
@@ -54,7 +84,14 @@
      <% } %>
     <!-- Return -->
     <div style="display: flex; align-items: center; justify-content: center;" class="cart">
-        <a href="/logged" class="cart"><button class="" style="">Ver mais produtos</button></a>
+
+        <a href="/logged" class="cart">
+        <!-- <form action="/exitCart" method="POST">     -->
+            <!-- This button needs updates the quantity products too in the cart! -->
+            <button name="submitButton" value="return" type="submit" class="" style="">Ver mais produtos</button>
+        <!-- </form> -->
+        <!-- </form> -->
+        </a>
     </div>        
 
 </div>
