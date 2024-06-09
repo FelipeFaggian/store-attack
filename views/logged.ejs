@@ -1,14 +1,5 @@
 <%- include('partials/header') %>
 
-<script>
-  // Set Item
-  // localStorage.setItem("email", userEmail);
-  // localStorage.getItem("email");
-  // Retrieve
-  // document.getElementById("demo").innerHTML = localStorage.getItem("lastname");
-</script>
-
-
 <!-- store header -->
 <a  href="/cart" style="text-decoration: none; display: flex; justify-content: center; align-items: center;">
   <button style="width: 80%; margin-top: 20px; display: flex; justify-content: center; align-items: center;" class=" toCart">
@@ -32,7 +23,7 @@
 
 <!-- store body -->
 <main>
-
+  <!-- section's container -->
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
@@ -42,202 +33,30 @@
     </div>
   </section>
 
+  <!-- products's container -->
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
-
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
         <!-- product 1-->
-        <!-- <a href="/product" style="text-decoration: none;"> -->
-          <form action="/product" method="POST">
-            <button type="submit" value="1" name="productId" style="border-radius: 5px; width: 100%; height: 100%;">
-              <div class="col">
-                <div class="card shadow-sm">
-                  <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" src="/public/img/estopa-carro.jpg" role="img" aria-label="Placeholder: Imagem" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Imagem</text></svg> -->
-                  <img class="bd-placeholder-img card-img-top" src="img/estopa-carro.jpg" width="100%" height="225" alt="Estopa de Limpeza">
-                  <div class="card-body">
-                    <p class="card-text text-body-secondary"> Estopa Automativa para Polimento <br> 20 Pacotes (<strong>200g</strong> por Pacote)</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <!-- <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                      </div> -->
-                      <small class="card-text lead" style="color: green; width: 100%;"><strong>R$ 10,00</strong></small>
-                    </div>
+         <% for (var i = 0; i < item.length; i++) { %>
+            <form action="/product" method="POST">
+              
+              <button type="submit" value="<%= item[i]['id'] %>" name="productId" style="border-radius: 5px; width: 100%; height: 100%;">
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <img class="bd-placeholder-img card-img-top" src=" <%= item[i]['url_img'] %>" width="100%" height="225" alt="Estopa de Limpeza">
+                      <div class="card-body">
+                        <p class="card-text text-body-secondary"> <%= item[i]['name'] %> <br> <strong><%= item[i]['description'] %></strong> </p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <small class="card-text lead" style="color: green; width: 100%;"><strong> R$ <%= item[i]['price'] %></strong></small>
+                          </div>
+                     </div>
                   </div>
                 </div>
-              </div>
-          </button>
-        </form>
-      <!-- </a> -->
-        <!-- product 2-->
-        <form action="/product" method="POST">
-          <button type="submit" value="2" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-          <div class="col">
-            <div class="card shadow-sm">
-              <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-              <img src="img/mini-fusivel.jpg" width="100%" height="225" alt="Mini Kit Fusível Automotivo">
-              <div class="card-body">
-                <p class="card-text text-body-secondary">Mini Kit Fusível Automotivo <br>20 Pacotes (<strong>1 Kit </strong>por Pacote) </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <!-- <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                  </div> -->
-                  <small class="card-text lead" style="color: green;"><strong>R$ 20,00</strong></small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </button>
-        </form>
-         <!-- product 3-->
-         <form action="/product" method="POST">
-          <button type="submit" value="3" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-          <div class="col">
-            <div class="card shadow-sm">
-              <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-              <img src="img/parafuso-plastico.jpg" width="100%" height="225" alt="Parafusos de Plástico para Rebites">
-              <div class="card-body">
-                <p class="card-text text-body-secondary">Parafusos Plásticos de 8mm <br>20 Pacotes (<strong>100 Unidades </strong>por Pacote) </p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <!-- <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                  </div> -->
-                  <small class="card-text lead" style="color: green;"><strong>R$ 30,00</strong></small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </button>
-        </form>
-      <!-- product 4-->
-      <form action="/product" method="POST">
-        <button type="submit" value="4" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-        <div class="col">
-          <div class="card shadow-sm">
-            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-            <img src="img/palheta-automotiva.jpg" width="100%" height="225" alt="Palheta Automotiva">
-            <div class="card-body">
-              <p class="card-text text-body-secondary">Palheta Automotiva <br>20 Pacotes (<strong>30 Unidades </strong>por Pacote) </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                </div> -->
-                <small class="card-text lead" style="color: green;"><strong>R$ 40,00</strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-      </form>
-      <!-- product 5-->
-      <form action="/product" method="POST">
-        <button type="submit" value="5" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-        <div class="col">
-          <div class="card shadow-sm">
-            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-            <img src="img/sistema-arrefecimento.jpg" width="100%" height="225" alt="Aditivos para Sistema de Arrefecimento">
-            <div class="card-body">
-              <p class="card-text text-body-secondary">Aditivos para Sistema de Arrefecimento<br>20 Pacotes (<strong>12 Unidades </strong>por Pacote) </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                </div> -->
-                <small class="card-text lead" style="color: green;"><strong>R$ 50,00</strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-      </form>
-      <!-- product 6-->
-      <form action="/product" method="POST">
-        <button type="submit" value="6" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-        <div class="col">
-          <div class="card shadow-sm">
-            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-            <img src="img/jogo-de-tapete-universal-automotivo.jpg" width="100%" height="225" alt="Jogo de Tapete Automotivo">
-            <div class="card-body">
-              <p class="card-text text-body-secondary">Jogo de Tapete Automotivo Universal<br>20 Pacotes (<strong>40 Unidades </strong>por Pacote) </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                </div> -->
-                <small class="card-text lead" style="color: green;"><strong>R$ 60,00</strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-      </form>
-       <!-- product 7-->
-       <form action="/product" method="POST">
-        <button type="submit" value="7" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-        <div class="col">
-          <div class="card shadow-sm">
-            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-            <img src="img/kit-vai-lavar-4-em-1-para-carros-luxcar.jpg" width="100%" height="225" alt="Kit Vai Lavar 4 em 1 para Carros">
-            <div class="card-body">
-              <p class="card-text text-body-secondary">Kit Vai Lavar 4 em 1 para Carros<br>20 Pacotes (<strong>1 Kit </strong>por Pacote) </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                </div> -->
-                <small class="card-text lead" style="color: green;"><strong>R$ 65,00</strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-      </form>
-       <!-- product 8-->
-       <form action="/product" method="POST">
-        <button type="submit" value="8" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-        <div class="col">
-          <div class="card shadow-sm">
-            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-            <img src="img/kit-10-lampadas-h7-12v-55w-comum-automotiva.jpg" width="100%" height="225" alt="Kit de Lâmpadas H7 12V 55W Comum">
-            <div class="card-body">
-              <p class="card-text text-body-secondary">Kit de Lâmpadas H7 12V 55W Comum<br>20 Pacotes (<strong>10 Unidades </strong>por Pacote) </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                </div> -->
-                <small class="card-text lead" style="color: green;"><strong>R$ 70,00</strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-      </form>
-       <!-- product 9-->
-       <form action="/product" method="POST">
-        <button type="submit" value="9" name="productId" style="border-radius: 5px; width: 100%;  height: 100%">
-        <div class="col">
-          <div class="card shadow-sm">
-            <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg> -->
-            <img src="img/suporte-veicular.png" width="100%" height="225" alt="Suporte Veicular">
-            <div class="card-body">
-              <p class="card-text text-body-secondary">Suporte Veicular para Dispositivos<br>20 Pacotes (<strong>1 Unidade </strong>por Pacote) </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">عرض</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>
-                </div> -->
-                <small class="card-text lead" style="color: green;"><strong>R$ 75,00</strong></small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-      </form>
+              </button>
+          </form>
+        <% } %>     
 </main>
 
   <!-- store footer-->

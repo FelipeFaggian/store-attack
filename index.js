@@ -87,9 +87,7 @@ app.get("/secret", (req, res) => {
 app.get("/logged", (req, res) => {
   if (req.isAuthenticated()) {
     //  console.log("The userEmail value is: ", userEmail);
-     res.render('logged.ejs', { 
-       userEmail: userEmail
-    });
+     res.render('logged.ejs', {userEmail: userEmail, item: item});
     } else {
     // console.log("sorry! you arent autheticated. back to login page...");
     res.redirect('/login');
@@ -108,7 +106,7 @@ app.get("/product", (req, res) => {
 
 app.post("/exitCart", (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("We are inside de exitCart's post block!");
+    // console.log("We are inside de exitCart's post block!");
 
     res.redirect("/logged");
     } else {
@@ -118,64 +116,68 @@ app.post("/exitCart", (req, res) => {
 
 app.post("/cartItems", async (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("The POST BLOCK cartItems was activeted!!!");
-    console.log("The button's value selected was: ", req.body.submitButton);
-    console.log("Collecting data to start process...");
+    // console.log("The POST BLOCK cartItems was activeted!!!");
+    let buttonValue = req.body.submitButton;
+    // console.log("The button's value selected was: ", buttonValue);
+    // let getNumber = buttonValue.replace("save", "");
+    // console.log("getNumber's value is: ",getNumber);
+    // console.log("Collecting data to start process...");
     let getName = req.body.productName;
     let getDescription = req.body.productDescription;
     let getQuantity = req.body.productQuantity;
-    console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", userEmail.trim());
+    // console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", userEmail.trim());
+    // Jconsole.log("Product selected to be updated: ", getName, "The input's quantity detected this value: ", getQuantity);
     if (req.body.submitButton == 'save') {
       console.log("You entered inside if block of the save button!");
       if (getQuantity > 0) {
-      console.log("Starting update quantity's product process!");
+      // console.log("Starting update quantity's product process!");
       const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
         [getQuantity, getName.trim(), userEmail.trim(), getDescription.trim()]);
-      console.log("The value of the newQuantity is: ", newQuantity);
-      console.log("Starting process of possible duplicated cart products...");
+      // console.log("The value of the newQuantity is: ", newQuantity);
+      // console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
         [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-      console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
+      // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
           [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-        console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
+        // console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
         const insertIndividual = db.query(
           "INSERT INTO cart (productname, clientemail, productquantity, productdescription) VALUES ($1, $2, $3, $4)",
           [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]
         );
-        console.log("The insertIndividual var's length value is: ", insertIndividual);
+        // console.log("The insertIndividual var's length value is: ", insertIndividual);
       }
     } else {
       console.log("Invalid value to be updated!");
-    }
+    } 
     }  if (req.body.submitButton == 'delete') {
-      console.log("You entered in else block of the delete button!");
-      console.log("Starting update quantity's product process!");
+      // console.log("You entered in else block of the delete button!");
+      // console.log("Starting update quantity's product process!");
       const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
         [getQuantity, getName.trim(), userEmail.trim(), getDescription.trim()]);
-      console.log("The value of the newQuantity is: ", newQuantity);
-      console.log("Starting process of possible duplicated cart products...");
+      // console.log("The value of the newQuantity is: ", newQuantity);
+      // console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
         [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-      console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
+      // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
-        console.log("INSIDE IF BLOCK STATMENT");
+        // console.log("INSIDE IF BLOCK STATMENT");
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
           [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-        console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
+        // console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
         const insertIndividual = db.query(
           "INSERT INTO cart (productname, clientemail, productquantity, productdescription) VALUES ($1, $2, $3, $4)",
           [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]
         );
-        console.log("The insertIndividual var's length value is: ", insertIndividual);
+        // console.log("The insertIndividual var's length value is: ", insertIndividual);
       } else {
-        console.log("ELSE BLOCK STATMENT Starting delete process...");
+        // console.log("ELSE BLOCK STATMENT Starting delete process...");
         // const currrentCart = await db.query("SELECT * FROM cart");
         // console.log("The currentCart's value is: ", currrentCart);
         const result = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
           [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-        console.log("The result's value is: ", result, "the deletion is done!");
+        // console.log("The result's value is: ", result, "the deletion is done!");
       }
 
     }
@@ -194,15 +196,23 @@ let productsCart = [];
 app.get("/cart", async (req, res) => {
   //client identified
   if (req.isAuthenticated()) {
-    console.log("Hey! You are in GET BLOCK cart's page!");
-    //rendering ckeckout's client
+    // console.log("Hey! You are in GET BLOCK cart's page!");  
     const recoveryCart = await db.query(`SELECT * FROM cart WHERE clientemail = $1`,
       [userEmail]
     );
+    //rendering cart's totalizator 
+    let totalCart = 0;
+    // console.log("Starting for loop to get the total amount!");
+    for (var i = 0; i < recoveryCart.rows.length; i++) {
+      // console.log("Row ", i, " has the price: ", recoveryCart.rows[i]['productprice'], " and the quantity: ", recoveryCart.rows[i]['productquantity']);
+      totalCart = totalCart + ( recoveryCart.rows[i]['productprice'] *  recoveryCart.rows[i]['productquantity']);
+    }
+    // console.log("We finish the for loop! Our totalCart is: ", totalCart);
+    //rendering ckeckout's client
     let idPreference = null;
-    console.log("We are starting the checkout's construction process. For while, the idPreference = ", idPreference);
+    // console.log("We are starting the checkout's construction process. For while, the idPreference = ", idPreference);
     if (recoveryCart.rows.length > 0) {
-    console.log("The cart of the user ", userEmail, " was recovered: ", recoveryCart );
+    // console.log("The cart of the user ", userEmail, " was recovered: ", recoveryCart );
     const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
     const preference = new Preference(client);
     let items = [
@@ -214,23 +224,23 @@ app.get("/cart", async (req, res) => {
     ];
     //fill array items with carts's client products!
     items = [];
-    console.log("Starting loop to refresh the items obj!");
+    // console.log("Starting loop to refresh the items obj!");
     for (var i = 0; i < recoveryCart.rows.length; i ++) {
-      console.log("A item was founded in client's cart! ");
-      console.log("The product founded's name is: ", recoveryCart.rows[i]['productname']);
-      console.log("The product founded's price is: ", recoveryCart.rows[i]['productprice']);
-      console.log("The product founded's quantity is: ", recoveryCart.rows[i]['productquantity']);
-      console.log("The dolar sign was getted out of the money's value: ", recoveryCart.rows[i]['productprice']);
+      // console.log("A item was founded in client's cart! ");
+      // console.log("The product founded's name is: ", recoveryCart.rows[i]['productname']);
+      // console.log("The product founded's price is: ", recoveryCart.rows[i]['productprice']);
+      // console.log("The product founded's quantity is: ", recoveryCart.rows[i]['productquantity']);
+      // console.log("The dolar sign was getted out of the money's value: ", recoveryCart.rows[i]['productprice']);
       items.push({
         title: recoveryCart.rows[i]['productname'],
         quantity:  recoveryCart.rows[i]['productquantity'],
         unit_price: recoveryCart.rows[i]['productprice']
       });
-      console.log("The array items recevei a new filled position! Lets see: ", items);
+      // console.log("The array items recevei a new filled position! Lets see: ", items);
     }
     //generating id preference by the items array
-    console.log("We finally get out from loop's scope. Lets see if we yet have our items's var: ", items);
-    console.log("FIRST LINE 1!"); 
+    // console.log("We finally get out from loop's scope. Lets see if we yet have our items's var: ", items);
+    // console.log("FIRST LINE 1!"); 
      
       const resultPreference = await preference.create({
           body: {
@@ -245,8 +255,8 @@ app.get("/cart", async (req, res) => {
 
         // .then(console.log)
         // .catch(console.log);
-        console.log("SECOND LINE 2!"); 
-        console.log("resultPreference['id'] pleas? ", resultPreference['id']);
+        // console.log("SECOND LINE 2!"); 
+        // console.log("resultPreference['id'] pleas? ", resultPreference['id']);
         idPreference = resultPreference['id'];
         // const options = {
         //   offset: 0,
@@ -258,9 +268,9 @@ app.get("/cart", async (req, res) => {
         // console.log( "CONST SEARCHED VLAUE: ", searched );
         // console.log("The seached value is: ", searched);
         // const idPreference = (searched['elements'][0]['id']);
-        console.log("The refresh ID's value from the cart's product to checkout is: ", idPreference);
+        // console.log("The refresh ID's value from the cart's product to checkout is: ", idPreference);
       } else {
-        "The render checkout was not consumed because the cart is empty!"
+        // "The render checkout was not consumed because the cart is empty!"
       }
     //rendering the products of client's cart...
     const result = await db.query(`SELECT * FROM cart WHERE clientemail = $1`,
@@ -271,24 +281,24 @@ app.get("/cart", async (req, res) => {
     // console.log("Starting for loop with length equal to: ", result.rows.length);
     productsCart = [];
     let lengthCart = result.rows.length;
-    console.log("The lengthCart's value is: ", lengthCart);
+    // console.log("The lengthCart's value is: ", lengthCart);
     for (var i = 0; i < result.rows.length; i++) {
       if (result.rows[i]['clientemail'] == userEmail) {
         // console.log("The for loop find a user's product!");
         productsCart.push(result.rows[i]);
         // console.log("Product inserted in cart client's array: ", productsCart);
       } else {
-        console.log("The for loop didnt find any products to our client...");
+        // console.log("The for loop didnt find any products to our client...");
       }
     }
 
     //test function to keypress event
     function keyPressed() {
-      console.log("Keypressed!");
+      // console.log("Keypressed!");
     }
     // console.log("The FINAL array of the productsCart is: ", productsCart);
     //rendering the page...
-    res.render("cart.ejs", {keyPressed: keyPressed() ,lengthCart: lengthCart, idPreference: idPreference, productsCart: productsCart, userEmail: userEmail, nameView: nameView, descriptionView: descriptionView, priceView: priceView });
+    res.render("cart.ejs", {totalCart: totalCart ,keyPressed: keyPressed() ,lengthCart: lengthCart, idPreference: idPreference, productsCart: productsCart, userEmail: userEmail, nameView: nameView, descriptionView: descriptionView, priceView: priceView });
     } else {
     // console.log("Sorry! You arent authenticated!");
     res.redirect('/login');
@@ -358,15 +368,15 @@ app.get("/accepted", async (req, res) => {
 
 //array product
 let item = [
-  { id: 1, name: "Estopa Automotiva para Polimento", description: "20 Pacotes (200g por Pacote)" , url_img: 'img/estopa-carro.jpg', price: "10" },
-  { id: 2, name: "Mini Kit Fusível Automotivo", description: "20 Pacotes (1 Kit por Pacote)" , url_img: 'img/mini-fusivel.jpg', price: "20" },
-  { id: 3, name: "Parafusos Plásticos de 8mm", description: "20 Pacotes (100 Unidades por Pacote)" , url_img: 'img/parafuso-plastico.jpg', price: "30" },
-  { id: 4, name: "Palheta Automotiva", description: "20 Pacotes (30 Unidades por Pacote)" , url_img: 'img/palheta-automotiva.jpg', price: "40" },
-  { id: 5, name: "Aditivos para Sistema de Arrefecimento", description: "20 Pacotes (12 Unidades por Pacote)" , url_img: 'img/sistema-arrefecimento.jpg', price: "50" },
-  { id: 6, name: "Jogo de Tapete Automotivo Universal", description: "20 Pacotes (40 Unidades por Pacote)" , url_img: 'img/jogo-de-tapete-universal-automotivo.jpg', price: "60" },
-  { id: 7, name: "Kit Vai Lavar 4 em 1 para Carros", description: "20 Pacotes (1 Kit por Pacote)" , url_img: 'img/kit-vai-lavar-4-em-1-para-carros-luxcar.jpg', price: "65" },
-  { id: 8, name: "Kit de Lâmpadas H7 12V 55W Comum", description: "20 Pacotes (10 Unidades por Pacote)" , url_img: 'img/kit-10-lampadas-h7-12v-55w-comum-automotiva.jpg', price: "70" },
-  { id: 9, name: "Suporte Veicular para Dispositivos", description: "20 Pacotes (1 Unidade por Pacote)" , url_img: 'img/suporte-veicular.png', price: "75" },
+  { id: 1, name: "Estopa Automotiva para Polimento", description: "4 Quilogramas" , url_img: 'img/estopa-carro.jpg', price: "9.99" },
+  { id: 2, name: "Mini Kit Fusível Automotivo", description: "20 Kits" , url_img: 'img/mini-fusivel.jpg', price: "19.99" },
+  { id: 3, name: "Parafusos Plásticos de 8mm", description: "2000 Unidades" , url_img: 'img/parafuso-plastico.jpg', price: "29.99" },
+  { id: 4, name: "Palheta Automotiva", description: "600 Unidades" , url_img: 'img/palheta-automotiva.jpg', price: "39.99" },
+  { id: 5, name: "Aditivos para Sistema de Arrefecimento", description: "720 Unidades" , url_img: 'img/sistema-arrefecimento.jpg', price: "49.99" },
+  { id: 6, name: "Jogo de Tapete Automotivo Universal", description: "800 Unidades" , url_img: 'img/jogo-de-tapete-universal-automotivo.jpg', price: "59.99" },
+  { id: 7, name: "Kit Vai Lavar 4 em 1 para Carros", description: "20 Kits" , url_img: 'img/kit-vai-lavar-4-em-1-para-carros-luxcar.jpg', price: "64.99" },
+  { id: 8, name: "Kit de Lâmpadas H7 12V 55W Comum", description: "200 Unidades" , url_img: 'img/kit-10-lampadas-h7-12v-55w-comum-automotiva.jpg', price: "69.99" },
+  { id: 9, name: "Suporte Veicular para Dispositivos", description: "20 unidades" , url_img: 'img/suporte-veicular.png', price: "74.99" },
 ];
 
 //temporary vars
@@ -378,10 +388,10 @@ let idView = null;
 
 //clicked button to be rendered!
 app.post("/product", async (req, res) => {
- console.log("Hey! You are on product Post's block!");
+//  console.log("Hey! You are on product Post's block!");
  let productId = req.body.productId;
- console.log("The selected product's ID is: ", productId);
- console.log("The values in product's array are: ", item);
+//  console.log("The selected product's ID is: ", productId);
+//  console.log("The values in product's array are: ", item);
   //  const item = await checkItem();
   for (var i = 0; i<item.length; i++) {
     if (item[i].id == productId) {
@@ -394,8 +404,8 @@ app.post("/product", async (req, res) => {
   };
 //render the page
  if (req.isAuthenticated()) {
-  console.log("The product clicked's name is: "+ nameView + " your description is: " + descriptionView + " and the price is: " + priceView +
-  " aaand your idView is: " + idView);
+  // console.log("The product clicked's name is: "+ nameView + " your description is: " + descriptionView + " and the price is: " + priceView +
+  // " aaand your idView is: " + idView);
   
   // console.log('Hey! Lets try get your e-mail stocked in the browser cache data?');
 
@@ -403,7 +413,7 @@ app.post("/product", async (req, res) => {
     nameView: nameView, priceView: priceView, imgView: imgView, descriptionView: descriptionView
   });
     
-  console.log("Rendering the Page...");
+  // console.log("Rendering the Page...");
 
   } else {
   res.redirect('/login');
@@ -414,18 +424,23 @@ app.post("/product", async (req, res) => {
 app.post("/cart", async (req, res) => {
   if (req.isAuthenticated()) {
     //block identified
-    console.log("Hey! You are in cart's POST BLOCK! The userEmail's value is: ", userEmail);
+    console.log("Hey! You are in cart's POST BLOCK!");
+    let idCart = 0; 
     //inserting user with query sql on cart's client databse 
-    console.log("Inserting product on client's cart...");
-    console.log("The product's name added to client's cart is: ", nameView);
+    // console.log("Inserting product on client's cart...");
+    // console.log("The product's name added to client's cart is: ", nameView);
+    const rowsCart = await db.query(`SELECT * FROM cart`);
+    // console.log("rowsCart.rows.length is: ", rowsCart.rows.length);
+    idCart = (rowsCart.rows.length + 1);
+    // console.log("idCart's value to the new product insert in cart database is: ", idCart);
     await db.query(
-      "INSERT INTO cart (clientemail, productname, productdescription, productprice, productquantity) VALUES ($1, $2, $3, $4, $5)",
-      [userEmail, nameView, descriptionView, priceView, 1]
+      "INSERT INTO cart (clientemail, productname, productdescription, productprice, productquantity, idcart) VALUES ($1, $2, $3, $4, $5, $6)",
+      [userEmail, nameView, descriptionView, priceView, 1, idCart]
     );
-    console.log("Product data added to client's cart in database!");
-    console.log("Recovering client's cart from database...");
+    // console.log("Product data added to client's cart in database!");
+    // console.log("Recovering client's cart from database...");
     const result = await db.query(`SELECT * FROM cart`);
-    console.log("The recovered intire cart's database is: ", result);
+    // console.log("The recovered intire cart's database is: ", result);
 
     //rendering the page...
     res.redirect("/cart");
@@ -436,7 +451,7 @@ app.post("/cart", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  console.log("On register request POST block!");
+  // console.log("On register request POST block!");
   const email = req.body.username;
   const contact = req.body.contact;
   const cnpj = req.body.cnpj;
