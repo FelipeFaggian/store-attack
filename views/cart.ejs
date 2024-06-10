@@ -1,9 +1,5 @@
 <%- include('partials/header') %>
 
-<script>
-    
-</script>
-
 <!-- cart body -->
 <div style="" class="cart">
     <div style="" class="cart" onclick="">
@@ -12,18 +8,20 @@
           
             <% if (lengthCart > 0) { %>
                 <h2 style="" class="cart"> Items adicionados ao Carrinho: </h2>
-                <% for(i = 0; i<productsCart.length; i++) { %> 
+                <% for(var i = 0; i<productsCart.length; i++) { %> 
                     
                 <li style=" " class="cart">            
                           
                             <form action="/cartItems" method="POST">
                             <div style="" class="cart">
-                                <input name="productName" readonly style="" class="cart inputRead" id="productName" value=" <%= productsCart[i]['productname'] %> ">
+                                <input name="productName" readonly style="" class="cart inputRead" id="productName<%i%>" value=" <%= productsCart[i]['productname'] %> ">
                                 <input name="productDescription" readonly style="" class="cart inputRead" id="productDescription" value="<%= productsCart[i]['productdescription'] %>" >
                                 
                                 <label for="productQuantity" style="margin-left: 5px;" class="cart"> Quantidade de remessas:  </label>
-                                <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>"  type="numbers"  onchange="document.getElementById('saveButton<%=i%>').click()" id="quantityInput<%=i%>" class="cart quantityInput" name="quantity">
-                            
+                                <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>"  type="numbers"  onchange="document.getElementById('saveButton<%=i%>').click()" id="quantityInput<%i%>" class="cart quantityInput">
+                                <!-- this buton doesent exists! -->
+                                <button value="<%= productsCart.length %> " id="getPosition<%i%>" style="visibility: hidden;"></button>
+                                <!-- this is just hidden but exists.-->
                                 <button name="submitButton" id="saveButton<%=i%>" value="save" type="submit" class="cart" style="visibility: hidden; height: 0px; font-size: 0px;"> Salvar remessas </button>
                             </div>
                             
@@ -66,13 +64,27 @@
     <!-- Return -->
     <div style="display: flex; align-items: center; justify-content: center;" class="cart">
 
-        <a href="/logged" class="cart">
+        <a href="/logged" class="cart" style="visibility: hidden;" id="toLogged"></a>
         <!-- <form action="/exitCart" method="POST">     -->
             <!-- This button needs updates the quantity products too in the cart! -->
-            <button id="returnButton" name="submitButton" value="return" type="submit" class="" style="">Ver mais produtos</button>
+        <script>
+            function mouseLeave() {
+                document.getElementById('paragraph').style.visibility = "visible";
+                document.getElementById('paragraph').style.fontSize = "30px";
+                const scrollHeight = document.body.scrollHeight;
+                window.scrollTo(0, scrollHeight);
+            }
+        </script>
+            <button name="" onclick="mouseLeave()" ondblclick="document.getElementById('toLogged').click()"  type="submit" class="" style=" display: flex; align-items: end; justify-content: center; ">
+                <div style="">
+                    <h5 style="font-weight: 900; padding-top: 10px;">Veja mais produtos</h5>
+                    <p id="paragraph" style="visibility: hidden; font-size: 0px;"> Aperte-me 2 vezes</p>
+                </div>
+            </button>
+        
         <!-- </form> -->
         <!-- </form> -->
-        </a>
+      
     </div>        
 
 </div>

@@ -125,7 +125,7 @@ app.post("/cartItems", async (req, res) => {
     let getName = req.body.productName;
     let getDescription = req.body.productDescription;
     let getQuantity = req.body.productQuantity;
-    // console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", userEmail.trim());
+    console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", userEmail.trim());
     // Jconsole.log("Product selected to be updated: ", getName, "The input's quantity detected this value: ", getQuantity);
     if (req.body.submitButton == 'save') {
       console.log("You entered inside if block of the save button!");
