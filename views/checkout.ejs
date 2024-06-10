@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+
+  <!-- body products -->
+<!-- <div style="" id="container"> -->
+  <ul style="margin-left: -20px;" class="checkout">
+          
+    <% if (productsCart.length > 0) { %>
+        <h2 style="display: flex; justify-content: center; align-items: center;" class="checkout">
+             Pedido final: 
+        </h2>
+        <% for(var i = 0; i<productsCart.length; i++) { %> 
+            
+        <li style="" class="checkout">            
+                  
+                    <form action="/cartItems" method="POST">
+                    <div style="" class="checkout" style="">
+                        <input name="productName" readonly style="" class="checkout inputRead" id="productName<%i%>" value=" <%= productsCart[i]['productname'] %> ">
+                        <input name="productDescription" readonly style="" class="checkout inputRead" id="productDescription" value="<%= productsCart[i]['productdescription'] %>">
+                        <div style="display: flex; align-items: center; justify-content: center;">                                
+                            <strong style="font-size: large;">R$</strong>
+                            <input name="productPrice" readonly style="font-size: large; width: 60px; color: green;" class="checkout inputRead" id="productPrice" value="<%= productsCart[i]['productprice'] %>" >
+                        </div>  
+                        <div style="display: flex; justify-content: center;">      
+                            <label for="productQuantity" style=" width: auto;" class="checkout"> Quantidade de remessas:   </label>
+                            <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>" style="background-color: rgb(241, 241, 241); border-color: rgb(241, 241, 241); font-weight: 900;" readonly type="numbers"  onchange="document.getElementById('saveButton<%=i%>').click()" id="quantityInput<%i%>" class="checkout quantityInput">
+                            <!-- this buton doesent exists! -->
+                            <!-- <button value="<%= productsCart.length %> " id="getPosition<%i%>" style=" width: 1px; height: 0px;"></button> -->
+                            <!-- this is just hidden but exists.-->
+                            <button name="submitButton" id="saveButton<%=i%>" value="save" type="submit" class="checkout" style="visibility: hidden; height: 0px; font-size: 0px;"> Salvar remessas </button>
+                        </div>
+                        </div>
+                        <h6 style="display: flex; justify-content: center; align-items: center; font-weight: 900;"> Subtotal:  <strong style="color: green;">&nbsp; R$ <%= (productsCart[i]['productquantity'] * productsCart[i]['productprice']).toFixed(2)   %> </strong></h6>
+                        <!-- <button name="submitButton" value="delete" type="submit" class="cart deleteButton" id="deleteButton" style=""> Tirar Item do Carrinho </button> -->
+                    </form>
+        
+        </li>         
+
+        <% } %>
+    <% }  else { %>
+            <h2 class="checkout"> Não há itens no checkout. </h2>
+            <p style=""  class="checkout" > Navegue por nossa coleção! </p>
+            <a href="/"><button class=""> Ver produtos </button> </a>
+            <% } %>   
+    </ul> 
+<!-- </div> -->
+<% if (productsCart.length > 0) { %>
+    <!-- Totalizator -->
+     <div class="checkout" style="display: flex; align-items: center; justify-content: center;">
+        <h4 class="checkout" style="text-align: center; font-weight: 900;"> Total: <strong style="color: green;"> R$ <%= totalCart.toFixed(2)  %> </strong></h4>
+     </div> 
+<% } else { %>
+
+<% } %>
+  <!-- Checkout -->
+   <div id="container" style="display: flex; align-items: center; justify-content: center;">
+    <div style=" margin: auto;" class="" id="">
+                <!-- SDK Payment -->
+                <div id="wallet_container" class="checkout" style=""></div>
+                <script>
+                    const mp = new MercadoPago('TEST-94cbcad2-f10d-4e1a-929a-1985dea7543e', {
+                    locale: 'pt-BR'
+                    });
+        
+                    mp.bricks().create("wallet", "wallet_container", {
+                    initialization: {
+                        preferenceId: "<%=  idPreference %>",
+                    },
+                    }); 
+                </script>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+        <a href="/cart" style="" id="returnCheckout" class="checkout"><button class="returnCheckout p-3 checkout" style=" border-radius: 5px; font-weight: 900;"> Retornar ao carrinho </button> </a>
+    </div>
+    <!-- <%- include('partials/footer') %> -->

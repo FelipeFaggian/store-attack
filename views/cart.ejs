@@ -10,21 +10,26 @@
                 <h2 style="" class="cart"> Items adicionados ao Carrinho: </h2>
                 <% for(var i = 0; i<productsCart.length; i++) { %> 
                     
-                <li style=" " class="cart">            
+                <li style="" class="cart">            
                           
                             <form action="/cartItems" method="POST">
-                            <div style="" class="cart">
+                            <div style="" class="cart" style="">
                                 <input name="productName" readonly style="" class="cart inputRead" id="productName<%i%>" value=" <%= productsCart[i]['productname'] %> ">
                                 <input name="productDescription" readonly style="" class="cart inputRead" id="productDescription" value="<%= productsCart[i]['productdescription'] %>">
-                                <input name="productPrice" readonly style="" class="cart inputRead" id="productPrice" value="<%= productsCart[i]['productprice'] %>" >
-                                <label for="productQuantity" style="margin-left: 5px;" class="cart"> Quantidade de remessas:  </label>
-                                <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>"  type="numbers"  onchange="document.getElementById('saveButton<%=i%>').click()" id="quantityInput<%i%>" class="cart quantityInput">
-                                <!-- this buton doesent exists! -->
-                                <button value="<%= productsCart.length %> " id="getPosition<%i%>" style="visibility: hidden;"></button>
-                                <!-- this is just hidden but exists.-->
-                                <button name="submitButton" id="saveButton<%=i%>" value="save" type="submit" class="cart" style="visibility: hidden; height: 0px; font-size: 0px;"> Salvar remessas </button>
-                            </div>
-                                <button name="submitButton" value="delete" type="submit" class="cart" id="deleteButton" style=""> Tirar Item do Carrinho </button>
+                                <div style="display: flex; align-items: center; justify-content: center;">                                
+                                    <strong style="font-size: large;">R$</strong>
+                                    <input name="productPrice" readonly style="font-size: large; width: 60px; color: green;" class="cart inputRead" id="productPrice" value="<%= productsCart[i]['productprice'] %>" >
+                                </div>  
+                                <div style="">      
+                                    <label for="productQuantity" style=" width: auto; margin-left: 20px;" class="cart"> Quantidade de remessas:   </label>
+                                    <input name="productQuantity"  value="<%= productsCart[i]['productquantity'] %>" style="" type="numbers"  onchange="document.getElementById('saveButton<%=i%>').click()" id="quantityInput<%i%>" class="cart quantityInput">
+                                    <!-- this buton doesent exists! -->
+                                    <!-- <button value="<%= productsCart.length %> " id="getPosition<%i%>" style=" width: 1px; height: 0px;"></button> -->
+                                    <!-- this is just hidden but exists.-->
+                                    <button name="submitButton" id="saveButton<%=i%>" value="save" type="submit" class="cart" style="visibility: hidden; height: 0px; font-size: 0px;"> Salvar remessas </button>
+                                </div>
+                                </div>
+                                <button name="submitButton" value="delete" type="submit" class="cart deleteButton" id="deleteButton" style=""> Tirar Item do Carrinho </button>
                             </form>
                 
                 </li>         
@@ -40,12 +45,12 @@
     <% if (lengthCart > 0) { %>
     <!-- Totalizator -->
      <div class="cart" style="display: flex; align-items: center; justify-content: center;">
-        <h4 class="cart" style="text-align: center; font-weight: 900;"> Total : <strong style="color: green;"> R$ <%= totalCart.toFixed(2)  %> </strong></h4>
+        <h4 class="cart" style="text-align: center; font-weight: 900;"> Total: <strong style="color: green;"> R$ <%= totalCart.toFixed(2)  %> </strong></h4>
      </div> 
 
     <!-- Checkout -->
-    <div style="" class="cart" id="meliDiv">
-             <!--SDK Payment-->
+    <!-- <div style="" class="cart" id="meliDiv">
+             SDK Payment
              <div id="wallet_container" class="cart" style=""></div>
              <script>
                  const mp = new MercadoPago('TEST-94cbcad2-f10d-4e1a-929a-1985dea7543e', {
@@ -58,32 +63,63 @@
                  },
                  }); 
              </script>
+    </div> -->
+    <div class="cart" style=" display: flex; align-items: center; justify-content: center;">
+    <button name="" onclick="goCheckout()" ondblclick="document.getElementById('toCheckout').click()"  type="submit" class="cart checkoutButton" style=" display: flex; align-items: end; justify-content: center; ">
+        <div style="">
+            <h5 id="goPay" style="font-weight: 900; padding: 10px;">Prosseguir para pagamento</h5>
+            <!-- <p id="paragraph" style="visibility: hidden; font-size: 0px;"> Aperte-me 2 vezes</p> -->
+        </div>
+    </button>
     </div>
+
      <% } %>
     <!-- Return -->
     <div style="display: flex; align-items: center; justify-content: center;" class="cart">
 
         <a href="/logged" class="cart" style="visibility: hidden;" id="toLogged"></a>
+        <a href="/checkout" class="cart" style="visibility: hidden;" id="toCheckout"></a>
         <!-- <form action="/exitCart" method="POST">     -->
             <!-- This button needs updates the quantity products too in the cart! -->
         <script>
-            function mouseLeave() {
-                document.getElementById('paragraph').style.visibility = "visible";
-                document.getElementById('paragraph').style.fontSize = "30px";
-                const scrollHeight = document.body.scrollHeight;
-                window.scrollTo(0, scrollHeight);
+            let timeout;
+            // function mouseLeave() {
+            //     document.getElementById('paragraph').style.visibility = "visible";
+            //     document.getElementById('paragraph').style.fontSize = "30px";
+            //     const scrollHeight = document.body.scrollHeight;
+            //     window.scrollTo(0, scrollHeight);
+            // }
+            //interval to charge database
+            function goCheckout(){
+                document.getElementById("goPay").innerHTML = "Carregando...";
+                // const myTimeout = setTimeout(document.getElementById('toLogged').click(), 60000);
+                timeout = setTimeout(toCheck, 3000);
             }
+            function toCheck() {
+                document.getElementById('toCheckout').click();
+                document.getElementById("goPay").innerHTML = "Prosseguir para pagamento";
+            }
+            function goLogged(){
+                document.getElementById("goHome").innerHTML = "Carregando...";
+                // const myTimeout = setTimeout(document.getElementById('toLogged').click(), 60000);
+                timeout = setTimeout(toLogg, 3000);
+            }
+            function toLogg() {
+                document.getElementById('toLogged').click()
+                document.getElementById("goHome").innerHTML = "Retornar";
+            }
+            
         </script>
               <% if (lengthCart > 0) { %>
-            <button name="" onclick="mouseLeave()" ondblclick="document.getElementById('toLogged').click()"  type="submit" class="" style=" display: flex; align-items: end; justify-content: center; ">
+            <button name="" onclick="goLogged()" ondblclick=""  type="submit" class="" style=" display: flex; align-items: end; justify-content: center; ">
                 <div style="">
-                    <h5 style="font-weight: 900; padding-top: 10px;">Veja mais produtos</h5>
-                    <p id="paragraph" style="visibility: hidden; font-size: 0px;"> Aperte-me 2 vezes</p>
+                    <h5 id="goHome" style="font-weight: 900;  padding: 10px;">Veja mais produtos</h5>
+                    <!-- <p id="paragraph" style="visibility: hidden; font-size: 0px;"> Aperte-me 2 vezes</p> -->
                 </div>
             </button>
             <% } else { %>
                 <a href="/logged" class="cart" style="text-decoration: none;">
-                    <button name="" onclick="mouseLeave()" ondblclick="document.getElementById('toLogged').click()"  type="submit" class="p-3" style=" display: flex; align-items: end; justify-content: center; padding-top: 0px;">
+                    <button name="" onclick="" type="submit" class="p-3" style=" display: flex; align-items: end; justify-content: center; padding-top: 0px;">
                         Ver produtos
                     </button>
                 </a>

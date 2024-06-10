@@ -1011,6 +1011,7 @@
       font-size: xx-large;
     }
 
+   
     p {
       font-weight: 900;
       font-size: 20px ;
@@ -1051,6 +1052,12 @@
       margin-bottom: 10px;
     }
 
+    .deleteButton {
+      text-align: center;
+      padding-top: 0px;
+      padding: 5px;
+    }
+
     #meliDiv {
       display: flex;
       align-items: center;
@@ -1062,11 +1069,10 @@
     color: white;
   }
 
-  label {
-    font-weight: 900;
-    font-size: 15px;
-
-  }
+    label {
+      font-weight: 900;
+      font-size: 15px;
+    }
 
     .quantityInput {
       width: 35px;
@@ -1090,6 +1096,18 @@
     padding-right: 30px;
    }
     
+   .checkoutButton {
+      color:green;
+      border: 2px solid green;
+      margin: 20px 0px;
+
+    }
+
+    .checkoutButton:hover {
+      background-color: green;
+      color: white;
+    }
+
   }
 
 
@@ -1200,6 +1218,9 @@
       font-weight: 900;
     }
 
+   
+
+
     .inputRead {
       width: 100%;
       text-align: center;
@@ -1260,6 +1281,296 @@
    
   }
 }
+
+.checkout {
+ 
+ @media (min-width: 100px) { 
+
+   h4 {
+     font-size: xx-large;
+   }
+
+  
+   p {
+     font-weight: 900;
+     font-size: 20px ;
+   }
+   
+   li {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border: 1px solid rgb(51, 51, 51);
+     width: 300px;
+     margin: auto;
+     border-radius: 5px;
+   }
+
+   h2 {
+     color: rgb(51, 51, 51);
+     padding: 10px;
+     font-weight: 900;
+   }
+
+   h6 {
+    margin-top: 10px;
+    font-size: large;
+   }
+
+   .inputRead {
+     width: 100%;
+     text-align: center;
+     border-radius: 5px;
+     color: rgb(51, 51, 51);
+     background-color: rgb(241, 241, 241);
+     border: 1px solid rgb(241, 241, 241);
+     font-weight: 900;
+     font-size: 15px;
+   }
+
+   #returnCheckout {
+    background-color: red;
+    color: red;
+   }
+
+   button {
+     border-radius: 10px;
+     padding: 10px;
+     padding-bottom: 0px;
+     font-weight: 700;
+     margin-bottom: 10px;
+   }
+
+   .deleteButton {
+     text-align: center;
+     padding-top: 0px;
+     padding: 5px;
+   }
+
+   #meliDiv {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+
+  button:hover {
+    background-color:  rgb(51, 51, 51);
+    color: white;
+  }
+
+   label {
+     font-weight: 900;
+     font-size: 15px;
+   }
+
+   .quantityInput {
+     width: 35px;
+     border-radius: 10px;
+     text-align: center;
+   }
+
+   #deleteButton {
+     width: 80%;
+     margin-top: 10px;
+   }
+
+  ul {
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   list-style: none;
+   width: 100%;
+   padding-right: 30px;
+  }
+   
+  .checkoutButton {
+     color:green;
+     border: 2px solid green;
+     margin: 20px 0px;
+
+   }
+
+   .checkoutButton:hover {
+     background-color: green;
+     color: white;
+   }
+
+ }
+
+
+ @media (min-width: 700px) {
+
+   
+   p {
+     font-weight: 900;
+     font-size: 20px ;
+   }
+   
+   li {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border: 1px solid rgb(51, 51, 51);
+     width: 600px;
+     margin: auto;
+     border-radius: 5px;
+   }
+
+   h2 {
+     color: rgb(51, 51, 51);
+     padding: 10px;
+     font-weight: 900;
+   }
+
+   .inputRead {
+     width: 100%;
+     text-align: center;
+     border-radius: 5px;
+     color: rgb(51, 51, 51);
+     background-color: rgb(241, 241, 241);
+     border: 1px solid rgb(241, 241, 241);
+     font-weight: 900;
+     font-size: 20px;
+   }
+
+   button {
+     border-radius: 10px;
+     padding: 10px;
+     padding-bottom: 0px;
+     font-weight: 700;
+     font-size: 20px;
+   }
+
+   #meliDiv {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+   }
+
+ button:hover {
+   background-color:  rgb(51, 51, 51);
+   color: white;
+ }
+
+ label {
+   font-weight: 900;
+   font-size: 20px;
+ }
+
+   .quantityInput {
+     width: 60px;
+     border-radius: 10px;
+     text-align: center;
+   }
+
+   #deleteButton {
+     width: 80%;
+     margin-top: 10px;
+   }
+
+  ul {
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   list-style: none;
+   width: 100%;
+   padding-right: 30px;
+  }
+
+ }
+
+
+ @media (min-width: 992px) { 
+   p {
+     font-weight: 900;
+     font-size: 20px ;
+   }
+   
+   li {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border: 1px solid rgb(51, 51, 51);
+     width: 600px;
+     margin: auto;
+     border-radius: 5px;
+   }
+
+   h2 {
+     color: rgb(51, 51, 51);
+     padding: 10px;
+     font-weight: 900;
+   }
+
+  
+
+
+   .inputRead {
+     width: 100%;
+     text-align: center;
+     border-radius: 5px;
+     color: rgb(51, 51, 51);
+     background-color: rgb(241, 241, 241);
+     border: 1px solid rgb(241, 241, 241);
+     font-weight: 900;
+     font-size: 20px;
+   }
+
+   button {
+     border-radius: 10px;
+     padding: 10px;
+     font-weight: 700;
+     font-size: 20px;
+     padding-bottom: 0px;
+   }
+
+   #meliDiv {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 100%;
+   }
+
+ button:hover {
+   background-color:  rgb(51, 51, 51);
+   color: white;
+ }
+
+ label {
+   font-weight: 900;
+   font-size: 20px;
+ }
+
+   .quantityInput {
+     width: 60px;
+     border-radius: 10px;
+     text-align: center;
+   }
+
+   #deleteButton {
+     width: 80%;
+     margin-top: 10px;
+   }
+
+  ul {
+   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   list-style: none;
+   width: 100%;
+   padding-right: 30px;
+  }
+  
+ }
+}
+
 
 
   </style>

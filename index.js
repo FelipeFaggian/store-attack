@@ -104,6 +104,19 @@ app.get("/product", (req, res) => {
   }
 });
 
+//universal var id preference refreshed after cart
+let idPreference = null;
+app.get("/checkout", (req, res) => {
+  if (req.isAuthenticated()) {
+    console.log("Hello! You ar in checkout get block! The let idPreference's value is: ", idPreference);
+    console.log("The products the will be payied are: ", productsCart);
+    console.log("The totalCart is: ", totalCart);
+    res.render("checkout.ejs", {productsCart: productsCart, idPreference: idPreference, totalCart: totalCart});
+    } else {
+    res.redirect('/login');
+  }
+});
+
 app.post("/exitCart", (req, res) => {
   if (req.isAuthenticated()) {
     // console.log("We are inside de exitCart's post block!");
@@ -140,7 +153,7 @@ app.post("/cartItems", async (req, res) => {
       console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
         [getName.trim(), getEmail, getQuantity, getDescription.trim()]);
-      // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
+      console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
           [getName.trim(), getEmail, getQuantity, getDescription.trim()]);
@@ -194,6 +207,7 @@ app.post("/cartItems", async (req, res) => {
 
 
 //universal var to stock client's cart
+let totalCart = 0;
 let productsCart = [];
 //recovring the client's cart
 app.get("/cart", async (req, res) => {
@@ -204,7 +218,7 @@ app.get("/cart", async (req, res) => {
       [userEmail]
     );
     //rendering cart's totalizator 
-    let totalCart = 0;
+    totalCart = 0;
     // console.log("Starting for loop to get the total amount!");
     for (var i = 0; i < recoveryCart.rows.length; i++) {
       // console.log("Row ", i, " has the price: ", recoveryCart.rows[i]['productprice'], " and the quantity: ", recoveryCart.rows[i]['productquantity']);
@@ -212,7 +226,7 @@ app.get("/cart", async (req, res) => {
     }
     // console.log("We finish the for loop! Our totalCart is: ", totalCart);
     //rendering ckeckout's client
-    let idPreference = null;
+    // let idPreference = null;
     // console.log("We are starting the checkout's construction process. For while, the idPreference = ", idPreference);
     if (recoveryCart.rows.length > 0) {
     // console.log("The cart of the user ", userEmail, " was recovered: ", recoveryCart );
