@@ -116,37 +116,40 @@ app.post("/exitCart", (req, res) => {
 
 app.post("/cartItems", async (req, res) => {
   if (req.isAuthenticated()) {
-    // console.log("The POST BLOCK cartItems was activeted!!!");
+    console.log("The POST BLOCK cartItems was activeted!!!");
     let buttonValue = req.body.submitButton;
-    // console.log("The button's value selected was: ", buttonValue);
+    console.log("The button's value selected was: ", buttonValue);
     // let getNumber = buttonValue.replace("save", "");
     // console.log("getNumber's value is: ",getNumber);
     // console.log("Collecting data to start process...");
+    console.log("The selected userEmail is: ", userEmail);
+    let getEmail = userEmail;
     let getName = req.body.productName;
     let getDescription = req.body.productDescription;
     let getQuantity = req.body.productQuantity;
-    console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", userEmail.trim());
+    let getPrice = req.body.productPrice;
+    console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", getEmail ," and the price is: ", getPrice);
     // Jconsole.log("Product selected to be updated: ", getName, "The input's quantity detected this value: ", getQuantity);
     if (req.body.submitButton == 'save') {
       console.log("You entered inside if block of the save button!");
       if (getQuantity > 0) {
-      // console.log("Starting update quantity's product process!");
+      console.log("Starting update quantity's product process!");
       const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
-        [getQuantity, getName.trim(), userEmail.trim(), getDescription.trim()]);
-      // console.log("The value of the newQuantity is: ", newQuantity);
-      // console.log("Starting process of possible duplicated cart products...");
+        [getQuantity, getName.trim(), getEmail, getDescription.trim()]);
+      console.log("The value of the newQuantity is: ", newQuantity);
+      console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
-        [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
+        [getName.trim(), getEmail, getQuantity, getDescription.trim()]);
       // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
-          [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-        // console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
+          [getName.trim(), getEmail, getQuantity, getDescription.trim()]);
+        console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
         const insertIndividual = db.query(
-          "INSERT INTO cart (productname, clientemail, productquantity, productdescription) VALUES ($1, $2, $3, $4)",
-          [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]
+          "INSERT INTO cart (productname, clientemail, productquantity, productdescription, productprice) VALUES ($1, $2, $3, $4, $5)",
+          [getName.trim(), getEmail, getQuantity, getDescription.trim(), getPrice]
         );
-        // console.log("The insertIndividual var's length value is: ", insertIndividual);
+        console.log("The insertIndividual var's length value is: ", insertIndividual);
       }
     } else {
       console.log("Invalid value to be updated!");
@@ -154,23 +157,23 @@ app.post("/cartItems", async (req, res) => {
     }  if (req.body.submitButton == 'delete') {
       // console.log("You entered in else block of the delete button!");
       // console.log("Starting update quantity's product process!");
-      const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
-        [getQuantity, getName.trim(), userEmail.trim(), getDescription.trim()]);
+      const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4 AND productquantity = $5", 
+        [getQuantity, getName.trim(), userEmail.trim(), getDescription.trim(), getQuantity]);
       // console.log("The value of the newQuantity is: ", newQuantity);
       // console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
         [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-      // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
+      console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
-        // console.log("INSIDE IF BLOCK STATMENT");
+        // console.log("INSIDE IF BLOCK STATMENT DUPLCATED");
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
           [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
         // console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
-        const insertIndividual = db.query(
-          "INSERT INTO cart (productname, clientemail, productquantity, productdescription) VALUES ($1, $2, $3, $4)",
-          [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]
+        const insertIndividual = await db.query(
+          "INSERT INTO cart (productname, clientemail, productquantity, productdescription, productprice) VALUES ($1, $2, $3, $4, $5)",
+          [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim(), getPrice]
         );
-        // console.log("The insertIndividual var's length value is: ", insertIndividual);
+        // console.log("The insertIndividual var's length value is: ", insertIndividual.rows.length);
       } else {
         // console.log("ELSE BLOCK STATMENT Starting delete process...");
         // const currrentCart = await db.query("SELECT * FROM cart");

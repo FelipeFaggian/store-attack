@@ -1,5 +1,11 @@
 <%- include('partials/header') %>
 
+<script>
+  function notDouble() {
+
+  }
+</script>
+
   <!-- store body -->
   <div style=" height: 100vh; display: flex; flex-direction: column;">
     <div class="product" style=" background-color: rgb(241, 241, 241); display: flex; flex-wrap: wrap; flex-direction: row;">
@@ -14,7 +20,7 @@
                 
                 <div class="fitButtons" style="display: flex; flex-direction: column; align-items: center; margin-top: 10px;">
                  
-                    <a href="/cart"><button type="submit" style="margin-bottom: 10px;" class="p-2 addButton"> Adicionar ao Carrinho </button></a>
+                    <a href="/cart"><button type="submit" ondblclick="notDouble()" style="margin-bottom: 10px;" class="p-2 addButton"> Adicionar ao Carrinho </button></a>
                   </form>
                   
                   <a href="/logged" class="product" id="returnLink" style="">  Retornar </a>
