@@ -1,0 +1,258 @@
+<%- include('partials/header') %>
+
+<body>
+
+
+    
+  <style>
+    #form-checkout {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+    }
+
+    .container {
+      height: 18px;
+      display: inline-block;
+      border: 1px solid rgb(118, 118, 118);
+      border-radius: 2px;
+      padding: 1px 2px;
+    }
+  </style>
+    
+    <form id="form-checkout" action="/process_payment" method="POST">
+        <div id="form-checkout__cardNumber" class="container"></div>
+        <div id="form-checkout__expirationDate" class="container"></div>
+        <div id="form-checkout__securityCode" class="container"></div>
+        <input type="text" id="form-checkout__cardholderName" placeholder="Titular do cartão" />
+        <select id="form-checkout__issuer" name="issuer">
+        <option value="" disabled selected>Banco emissor</option>
+        </select>
+        <select id="form-checkout__installments" name="installments">
+        <option value="" disabled selected>Parcelas</option>
+        </select>
+        <select id="form-checkout__identificationType" name="identificationType">
+        <option value="" disabled selected>Tipo de documento</option>
+        </select>
+        <input type="text" id="form-checkout__identificationNumber" name="identificationNumber" placeholder="Número do documento" />
+        <input type="email" id="form-checkout__email" name="email" placeholder="E-mail" />
+
+        <input id="token" name="token" type="hidden">
+        <input id="paymentMethodId" name="paymentMethodId" type="hidden">
+        <input id="transactionAmount" name="transactionAmount" type="hidden" value="100">
+        <input id="description" name="description" type="hidden" value="Nome do Produto">
+
+        <button type="submit" id="form-checkout__submit">Pagar</button>
+    </form>
+
+
+
+    <script src="https://sdk.mercadopago.com/js/v2">
+
+        const mp = new MercadoPago("APP_USR-8ff344d6-89e8-4721-91ac-ea8c0647aec2");
+    
+        const cardNumberElement = mp.fields.create('cardNumber', {
+        placeholder: "Número do cartão"
+        }).mount('form-checkout__cardNumber');
+        const expirationDateElement = mp.fields.create('expirationDate', {
+        placeholder: "MM/YY",
+        }).mount('form-checkout__expirationDate');
+        const securityCodeElement = mp.fields.create('securityCode', {
+        placeholder: "Código de segurança"
+        }).mount('form-checkout__securityCode');
+
+        (async function getIdentificationTypes() {
+      try {
+        const identificationTypes = await mp.getIdentificationTypes();
+        const identificationTypeElement = document.getElementById('form-checkout__identificationType');
+
+        createSelectOptions(identificationTypeElement, identificationTypes);
+      } catch (e) {
+        return console.error('Error getting identificationTypes: ', e);
+      }
+    })();
+
+    function createSelectOptions(elem, options, labelsAndKeys = { label: "name", value: "id" }) {
+      const { label, value } = labelsAndKeys;
+
+      elem.options.length = 0;
+
+      const tempOptions = document.createDocumentFragment();
+
+      options.forEach(option => {
+        const optValue = option[value];
+        const optLabel = option[label];
+
+        const opt = document.createElement('option');
+        opt.value = optValue;
+        opt.textContent = optLabel;
+
+        tempOptions.appendChild(opt);
+      });
+
+      elem.appendChild(tempOptions);
+    }
+
+    
+    const paymentMethodElement = document.getElementById('paymentMethodId');
+    const issuerElement = document.getElementById('form-checkout__issuer');
+    const installmentsElement = document.getElementById('form-checkout__installments');
+
+    const issuerPlaceholder = "Banco emissor";
+    const installmentsPlaceholder = "Parcelas";
+
+    let currentBin;
+    cardNumberElement.on('binChange', async (data) => {
+      const { bin } = data;
+      try {
+        if (!bin && paymentMethodElement.value) {
+          clearSelectsAndSetPlaceholders();
+          paymentMethodElement.value = "";
+        }
+
+        if (bin && bin !== currentBin) {
+          const { results } = await mp.getPaymentMethods({ bin });
+          const paymentMethod = results[0];
+
+          paymentMethodElement.value = paymentMethod.id;
+          updatePCIFieldsSettings(paymentMethod);
+          updateIssuer(paymentMethod, bin);
+          updateInstallments(paymentMethod, bin);
+        }
+
+        currentBin = bin;
+      } catch (e) {
+        console.error('error getting payment methods: ', e)
+      }
+    });
+
+    function clearSelectsAndSetPlaceholders() {
+      clearHTMLSelectChildrenFrom(issuerElement);
+      createSelectElementPlaceholder(issuerElement, issuerPlaceholder);
+
+      clearHTMLSelectChildrenFrom(installmentsElement);
+      createSelectElementPlaceholder(installmentsElement, installmentsPlaceholder);
+    }
+
+    function clearHTMLSelectChildrenFrom(element) {
+      const currOptions = [...element.children];
+      currOptions.forEach(child => child.remove());
+    }
+
+    function createSelectElementPlaceholder(element, placeholder) {
+      const optionElement = document.createElement('option');
+      optionElement.textContent = placeholder;
+      optionElement.setAttribute('selected', "");
+      optionElement.setAttribute('disabled', "");
+
+      element.appendChild(optionElement);
+    }
+
+    // Esta etapa melhora as validações cardNumber e securityCode
+    function updatePCIFieldsSettings(paymentMethod) {
+      const { settings } = paymentMethod;
+
+      const cardNumberSettings = settings[0].card_number;
+      cardNumberElement.update({
+        settings: cardNumberSettings
+      });
+
+      const securityCodeSettings = settings[0].security_code;
+      securityCodeElement.update({
+        settings: securityCodeSettings
+      });
+    }
+
+    //getting data from bank that has emitted
+    async function updateIssuer(paymentMethod, bin) {
+      const { additional_info_needed, issuer } = paymentMethod;
+      let issuerOptions = [issuer];
+
+      if (additional_info_needed.includes('issuer_id')) {
+        issuerOptions = await getIssuers(paymentMethod, bin);
+      }
+
+      createSelectOptions(issuerElement, issuerOptions);
+    }
+
+    async function getIssuers(paymentMethod, bin) {
+      try {
+        const { id: paymentMethodId } = paymentMethod;
+        return await mp.getIssuers({ paymentMethodId, bin });
+      } catch (e) {
+        console.error('error getting issuers: ', e)
+      }
+    };
+    //get quantity installments
+    async function updateInstallments(paymentMethod, bin) {
+      try {
+        const installments = await mp.getInstallments({
+          amount: document.getElementById('transactionAmount').value,
+          bin,
+          paymentTypeId: 'credit_card'
+        });
+        const installmentOptions = installments[0].payer_costs;
+        const installmentOptionsKeys = { label: 'recommended_message', value: 'installments' };
+        createSelectOptions(installmentsElement, installmentOptions, installmentOptionsKeys);
+      } catch (error) {
+        console.error('error getting installments: ', e)
+      }
+    }
+    //creating card's token
+            
+    const formElement = document.getElementById('form-checkout');
+    formElement.addEventListener('submit', createCardToken);
+
+    async function createCardToken(event) {
+      try {
+        const tokenElement = document.getElementById('token');
+        if (!tokenElement.value) {
+          event.preventDefault();
+          const token = await mp.fields.createCardToken({
+            cardholderName: document.getElementById('form-checkout__cardholderName').value,
+            identificationType: document.getElementById('form-checkout__identificationType').value,
+            identificationNumber: document.getElementById('form-checkout__identificationNumber').value,
+          });
+          tokenElement.value = token.id;
+          formElement.requestSubmit();
+        }
+      } catch (e) {
+        console.error('error creating card token: ', e)
+      }
+    }
+    //sending payment   
+    var mercadopago = require('mercadopago');
+    mercadopago.configurations.setAccessToken("APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078");
+
+        var payment_data = {
+        transaction_amount: Number(req.body.transactionAmount),
+        token: req.body.token,
+        description: req.body.description,
+        installments: Number(req.body.installments),
+        payment_method_id: req.body.paymentMethodId,
+        issuer_id: req.body.issuer,
+        payer: {
+            email: req.body.email,
+            identification: {
+            type: req.body.identificationType,
+            number: req.body.identificationNumber
+            }
+        }
+        };
+
+        mercadopago.payment.save(payment_data)
+        .then(function(response) {
+            res.status(response.status).json({
+            status: response.body.status,
+            status_detail: response.body.status_detail,
+            id: response.body.id
+            });
+        })
+        .catch(function(error) {
+            console.error(error)
+        });
+
+    </script>
+</body>
+  
+ <!-- <%- include('partials/footer') %> -->

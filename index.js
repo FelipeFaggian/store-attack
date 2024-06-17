@@ -12,8 +12,20 @@ import { neon } from '@neondatabase/serverless';
 import nn from "pg";
 import EventEmitter from 'node:events';
 import NodeCache from 'node-cache';
-import { MercadoPagoConfig, Preference } from 'mercadopago';
+import { MercadoPagoConfig, Preference, Payment} from 'mercadopago';
 import { render } from "ejs";
+import QRCode from 'qrcode';
+import qr from 'qr-image';
+import fs from 'fs';
+
+//repeating the search for status payments....
+// const intervalID = setInterval(myCallback, 5000);
+
+// function myCallback() {
+//   // Your code here
+//   // Parameters are purely optional.
+//   console.log("setInterval is searching something for each 5 seconds...");
+// }
 
 //trying drive the email to the cart page
 let userEmail = null;        
@@ -76,6 +88,60 @@ app.get("/", (req, res) => {
   }
 });
 
+//qrcode image block to the pix page
+app.post("/pix", async (req, res) => {
+  if (req.isAuthenticated()) { 
+    console.log("You are in pix.ejs file!"); 
+    console.log("Genereting qr code TEXT payment....");
+     // marcado pago get payment status by ID
+     const client = new MercadoPagoConfig({ accessToken: 'APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078' });
+     const payment = new Payment(client);
+ 
+     // Step 4: Create the request object
+     console.log("body pix will be created! totalCart's value is: ", totalCart, " and userEmail's value is: ", userEmail);
+     const body = {
+       transaction_amount: totalCart,
+       description: 'Produto(s)',
+       payment_method_id: 'pix',
+       payer: {
+         email: userEmail
+       },
+     };
+ 
+     // Step 5: Create request options object - Optional
+     // const requestOptions = {
+     //   idempotencyKey: '<IDEMPOTENCY_KEY>',
+     // };
+ 
+     // Step 6: Make the request
+     // payment.create({ body, requestOptions }).then(console.log).catch(console.log);
+    //  payment.create({ body }).then(console.log).catch(console.log);
+    let getQr = await payment.create({ body });
+    console.log("The  getQr['point_of_interaction']['transaction_data']['qr_code']'s value is: ", getQr['point_of_interaction']['transaction_data']['qr_code']);
+    let textQr = getQr['point_of_interaction']['transaction_data']['qr_code'];
+    // console.log("Generating qr code IMAGE payment...");
+    var qr_svg = qr.image(textQr, { type: 'svg' });
+    qr_svg.pipe(fs.createWriteStream('i_love_qr.svg'));
+     
+    var svg_string = qr.imageSync(textQr, { type: 'svg' });
+    
+    res.render("pix.ejs", { svg_string: svg_string, textQr: textQr});
+    } else {
+
+    res.render("home.ejs");
+  }
+});
+
+app.get("/payment", (req, res) => {
+  if (req.isAuthenticated()) { 
+    console.log("You are in payment.ejs file!");  
+    res.render("payment.ejs");
+    } else {
+
+    res.render("home.ejs");
+  }
+});
+
 app.get("/secret", (req, res) => {
   if (req.isAuthenticated()) {
     res.render("secrets.ejs");
@@ -108,9 +174,12 @@ app.get("/product", (req, res) => {
 let idPreference = null;
 app.get("/checkout", (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("Hello! You ar in checkout get block! The let idPreference's value is: ", idPreference);
-    console.log("The products the will be payied are: ", productsCart);
-    console.log("The totalCart is: ", totalCart);
+    console.log("Hello! You ar in checkout get block!");
+    // console.log("xRequest's vlaue is: ", xRequest);
+    // form this block the client can see your request solidified and be redirect to pix or card payment
+
+    // console.log("The products the will be payied are: ", productsCart);
+    // console.log("The totalCart is: ", totalCart);
     res.render("checkout.ejs", {productsCart: productsCart, idPreference: idPreference, totalCart: totalCart});
     } else {
     res.redirect('/login');
@@ -209,6 +278,7 @@ app.post("/cartItems", async (req, res) => {
 //universal var to stock client's cart
 let totalCart = 0;
 let productsCart = [];
+let xRequest = null;
 //recovring the client's cart
 app.get("/cart", async (req, res) => {
   //client identified
@@ -230,7 +300,7 @@ app.get("/cart", async (req, res) => {
     // console.log("We are starting the checkout's construction process. For while, the idPreference = ", idPreference);
     if (recoveryCart.rows.length > 0) {
     // console.log("The cart of the user ", userEmail, " was recovered: ", recoveryCart );
-    const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
+    const client = new MercadoPagoConfig({ accessToken: 'APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078' });
     const preference = new Preference(client);
     let items = [
       // {
@@ -258,6 +328,14 @@ app.get("/cart", async (req, res) => {
     //generating id preference by the items array
     // console.log("We finally get out from loop's scope. Lets see if we yet have our items's var: ", items);
     // console.log("FIRST LINE 1!"); 
+    // items = [
+    //   {
+    //     id: '830882078-1c05a712-bdbf-4a47-adda-1fbf6e891a0c',
+    //     title: 'Estopa de Polimento',
+    //     quantity: 1,
+    //     unit_price: 10
+    //   }
+    // ];
      
       const resultPreference = await preference.create({
           body: {
@@ -267,6 +345,7 @@ app.get("/cart", async (req, res) => {
             installments: 12
             },     
             items,
+            notification_url: 'http://test.com'
           }
         });
 
@@ -274,6 +353,8 @@ app.get("/cart", async (req, res) => {
         // .catch(console.log);
         // console.log("SECOND LINE 2!"); 
         // console.log("resultPreference['id'] pleas? ", resultPreference['id']);
+        console.log("The resultPreference's value is: ", resultPreference);
+        xRequest = resultPreference['api_response']['headers']['x-request-id'];
         idPreference = resultPreference['id'];
         // const options = {
         //   offset: 0,
@@ -285,7 +366,7 @@ app.get("/cart", async (req, res) => {
         // console.log( "CONST SEARCHED VLAUE: ", searched );
         // console.log("The seached value is: ", searched);
         // const idPreference = (searched['elements'][0]['id']);
-        // console.log("The refresh ID's value from the cart's product to checkout is: ", idPreference);
+        console.log("The idPreference is: ", idPreference);
       } else {
         // "The render checkout was not consumed because the cart is empty!"
       }
@@ -385,7 +466,7 @@ app.get("/accepted", async (req, res) => {
 
 //array product
 let item = [
-  { id: 1, name: "Estopa Automotiva para Polimento", description: "4 Quilogramas" , url_img: 'img/estopa-carro.jpg', price: "9.99" },
+  { id: 1, name: "Estopa Automotiva para Polimento", description: "4 Quilogramas" , url_img: 'img/estopa-carro.jpg', price: "0.01" },
   { id: 2, name: "Mini Kit Fusível Automotivo", description: "20 Kits" , url_img: 'img/mini-fusivel.jpg', price: "19.99" },
   { id: 3, name: "Parafusos Plásticos de 8mm", description: "2000 Unidades" , url_img: 'img/parafuso-plastico.jpg', price: "29.99" },
   { id: 4, name: "Palheta Automotiva", description: "600 Unidades" , url_img: 'img/palheta-automotiva.jpg', price: "39.99" },

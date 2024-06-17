@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<div id="container" class="pix" style=" display: flex; justify-content: start; align-items: center; flex-direction: column; height: 100vh; ">
+    <h1 class="pix" style="margin-bottom: 10px; margin-top: 20px;"> Pagar com QR Code </h1>
+    <!-- <p> There are a QR code above? </p> -->
+    <!-- qr code image -->
+    <div class="pix" style="">
+        <%- svg_string %>
+    </div>
+    <!-- qr code text -->
+    <!-- <div style="width: 100%; display: flex; justify-content: center; margin-top: 10px;">
+        <input readonly value=" <%= textQr %>" style="width: 50%;">
+    </div> -->
+
+
+    <div class="pix" style=" display: flex; justify-content: center; margin-top: 10px; flex-direction: column; align-items: center;">
+        <ol  class="pix" style=" text-align: start;font-weight: 900;" type='1'>
+            
+            <li><small style=""> Acesse o aplicativo do seu banco;</small> </li>
+            <li><small style=""> Vá na área PIX;</small> </li>
+            <li><small style=""> Cole o código abaixo;</small> </li>
+            <li><small style=""> Siga o fluxo do pagamento; </small> </li>
+            <li><small style=""> Pronto! </small> </li>
+        </ol>
+        <div class="pix" style="display: flex; flex-direction: row-reverse; width: 100%;">
+            <input class="pix" style="width: 100%;" type="text" value="<%= textQr %>" id="myInput">
+            <button class="pix" style="width: 50%;" onclick="myFunction()">
+            <!-- <button onclick="myFunction()"> -->
+                <span class="pix" id="myTooltip" style="font-weight: 900;">Copiar</span>
+
+            </button>
+        </div>
+        <a class="pix"  href="/checkout"><button class="pix" style="margin-top: 20px; font-weight: 500;"> Retornar </button></a>
+    </div>
+
+<script>
+    let timeout;
+
+    function returnCopy() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copiar de novo?";
+    }
+
+    function outFunc() {
+        timeout = setTimeout(returnCopy, 3000);
+
+    }
+
+    function myFunction() {
+    var copyText = document.getElementById("myInput");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copiado!";
+    
+    outFunc();
+    
+    }
+
+</script>
+
+</div>
+
+<%- include('partials/footer') %>
