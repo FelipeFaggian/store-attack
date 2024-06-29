@@ -2,5 +2,60 @@
     <small class="home" style=" position: fixed; width: 100%;  bottom: 0; display: flex; justify-content: center; margin: auto; color: rgb(81, 81, 81);"> Automultisom - © Todos os direitos reservados </small>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+//webhook 
+
+// Obtain the x-signature value from the header
+const xSignature = headers['x-signature']; // Assuming headers is an object containing request headers
+const xRequestId = headers['x-request-id']; // Assuming headers is an object containing request headers
+
+// Obtain Query params related to the request URL
+const urlParams = new URLSearchParams(window.location.search);
+const dataID = urlParams.get('data.id');
+
+// Separating the x-signature into parts
+const parts = xSignature.split(',');
+
+// Initializing variables to store ts and hash
+let ts;
+let hash;
+
+// Iterate over the values to obtain ts and v1
+parts.forEach(part => {
+    // Split each part into key and value
+    const [key, value] = part.split('=');
+    if (key && value) {
+        const trimmedKey = key.trim();
+        const trimmedValue = value.trim();
+        if (trimmedKey === 'ts') {
+            ts = trimmedValue;
+        } else if (trimmedKey === 'v1') {
+            hash = trimmedValue;
+        }
+    }
+});
+
+// Obtain the secret key for the user/application from Mercadopago developers site
+const secret = 'c3a2b960619fea9151aeb6ff405cfd0ef8b7b349637d5a31c5fefca008427801';
+
+// Generate the manifest string
+const manifest = `id:${dataID};request-id:${xRequestId};ts:${ts};`;
+
+// Create an HMAC signature
+const hmac = crypto.createHmac('sha256', secret);
+hmac.update(manifest);
+
+// Obtain the hash result as a hexadecimal string
+const sha = hmac.digest('hex');
+
+if (sha === hash) {
+    // HMAC verification passed
+    // console.log("HMAC verification passed");
+    alert("HMAC verification passed");
+} else {
+    // HMAC verification failed
+    alert("HMAC verification failed");
+}
+</script>
 </body>
 </html>

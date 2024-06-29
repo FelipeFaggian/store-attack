@@ -12,7 +12,9 @@ import { neon } from '@neondatabase/serverless';
 import nn from "pg";
 import EventEmitter from 'node:events';
 import NodeCache from 'node-cache';
-import { MercadoPagoConfig, Preference, Payment} from 'mercadopago';
+// import { MercadoPagoConfig, Preference, Payment} from 'mercadopago';
+import pkgMeli from 'mercadopago';
+const { MercadoPagoConfig, Preference, Payment, Costumer, CustomerCard} = pkgMeli;
 import { render } from "ejs";
 import QRCode from 'qrcode';
 import qr from 'qr-image';
@@ -89,24 +91,24 @@ app.get("/", (req, res) => {
 });
 
 //qrcode image block to the pix page
-app.post("/pix", async (req, res) => {
-  if (req.isAuthenticated()) { 
-    console.log("You are in pix.ejs file!"); 
-    console.log("Genereting qr code TEXT payment....");
-     // marcado pago get payment status by ID
-     const client = new MercadoPagoConfig({ accessToken: 'APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078' });
-     const payment = new Payment(client);
+// app.post("/pix", async (req, res) => {
+//   if (req.isAuthenticated()) { 
+//     console.log("You are in pix.ejs file!"); 
+//     console.log("Genereting qr code TEXT payment....");
+//      // marcado pago get payment status by ID
+//      const client = new MercadoPagoConfig({ accessToken: 'APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078' });
+//      const payment = new Payment(client);
  
-     // Step 4: Create the request object
-     console.log("body pix will be created! totalCart's value is: ", totalCart, " and userEmail's value is: ", userEmail);
-     const body = {
-       transaction_amount: totalCart,
-       description: 'Produto(s)',
-       payment_method_id: 'pix',
-       payer: {
-         email: userEmail
-       },
-     };
+//      // Step 4: Create the request object
+//      console.log("body pix will be created! totalCart's value is: ", totalCart, " and userEmail's value is: ", userEmail);
+//      const body = {
+//        transaction_amount: totalCart,
+//        description: 'Produto(s)',
+//        payment_method_id: 'pix',
+//        payer: {
+//          email: userEmail
+//        },
+//      };
  
      // Step 5: Create request options object - Optional
      // const requestOptions = {
@@ -116,31 +118,36 @@ app.post("/pix", async (req, res) => {
      // Step 6: Make the request
      // payment.create({ body, requestOptions }).then(console.log).catch(console.log);
     //  payment.create({ body }).then(console.log).catch(console.log);
-    let getQr = await payment.create({ body });
-    console.log("The  getQr['point_of_interaction']['transaction_data']['qr_code']'s value is: ", getQr['point_of_interaction']['transaction_data']['qr_code']);
-    let textQr = getQr['point_of_interaction']['transaction_data']['qr_code'];
-    // console.log("Generating qr code IMAGE payment...");
-    var qr_svg = qr.image(textQr, { type: 'svg' });
-    qr_svg.pipe(fs.createWriteStream('i_love_qr.svg'));
+//     let getQr = await payment.create({ body });
+//     console.log("The  getQr['point_of_interaction']['transaction_data']['qr_code']'s value is: ", getQr['point_of_interaction']['transaction_data']['qr_code']);
+//     let textQr = getQr['point_of_interaction']['transaction_data']['qr_code'];
+//     // console.log("Generating qr code IMAGE payment...");
+//     var qr_svg = qr.image(textQr, { type: 'svg' });
+//     qr_svg.pipe(fs.createWriteStream('i_love_qr.svg'));
      
-    var svg_string = qr.imageSync(textQr, { type: 'svg' });
+//     var svg_string = qr.imageSync(textQr, { type: 'svg' });
     
-    res.render("pix.ejs", { svg_string: svg_string, textQr: textQr});
-    } else {
+//     res.render("pix.ejs", { svg_string: svg_string, textQr: textQr});
+//     } else {
 
-    res.render("home.ejs");
-  }
-});
+//     res.render("home.ejs");
+//   }
+// });
 
-app.get("/payment", (req, res) => {
-  if (req.isAuthenticated()) { 
-    console.log("You are in payment.ejs file!");  
-    res.render("payment.ejs");
-    } else {
+// app.post("/process_payment", async (req, res) => {
+//   if (req.isAuthenticated()) { 
+//     console.log("You are in /process_payment Post block!");
+//     const client = new MercadoPagoConfig({ accessToken: 'APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078' });
+//     const payment = new Payment(client);
+//     payment.create({ body: req.body })
+//     .then(console.log)
+//     .catch(console.log);
+//     res.render("formCard.ejs");
+//     } else {
 
-    res.render("home.ejs");
-  }
-});
+//     res.render("home.ejs");
+//   }
+// });
 
 app.get("/secret", (req, res) => {
   if (req.isAuthenticated()) {
@@ -149,6 +156,17 @@ app.get("/secret", (req, res) => {
     res.redirect('/login');
   }
 });
+
+// app.post("/formCard", (req, res) => {
+//   if (req.isAuthenticated()) {
+//      console.log("Entered inside /formCard post block! ");
+
+//      res.render("formCard.ejs");
+//     } else {
+//     res.redirect('/login');
+//   }
+// });
+
 
 app.get("/logged", (req, res) => {
   if (req.isAuthenticated()) {
@@ -174,7 +192,7 @@ app.get("/product", (req, res) => {
 let idPreference = null;
 app.get("/checkout", (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("Hello! You ar in checkout get block!");
+    // console.log("Hello! You ar in checkout get block!");
     // console.log("xRequest's vlaue is: ", xRequest);
     // form this block the client can see your request solidified and be redirect to pix or card payment
 
@@ -198,43 +216,43 @@ app.post("/exitCart", (req, res) => {
 
 app.post("/cartItems", async (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("The POST BLOCK cartItems was activeted!!!");
+    // console.log("The POST BLOCK cartItems was activeted!!!");
     let buttonValue = req.body.submitButton;
-    console.log("The button's value selected was: ", buttonValue);
+    // console.log("The button's value selected was: ", buttonValue);
     // let getNumber = buttonValue.replace("save", "");
     // console.log("getNumber's value is: ",getNumber);
     // console.log("Collecting data to start process...");
-    console.log("The selected userEmail is: ", userEmail);
+    // console.log("The selected userEmail is: ", userEmail);
     let getEmail = userEmail;
     let getName = req.body.productName;
     let getDescription = req.body.productDescription;
     let getQuantity = req.body.productQuantity;
     let getPrice = req.body.productPrice;
-    console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", getEmail ," and the price is: ", getPrice);
+    // console.log("The selected product's name is: ",getName.trim(), " the description is: ",getDescription.trim(), " the quantity is ", getQuantity, " and the e-mail of the cart's owner is: ", getEmail ," and the price is: ", getPrice);
     // Jconsole.log("Product selected to be updated: ", getName, "The input's quantity detected this value: ", getQuantity);
     if (req.body.submitButton == 'save') {
-      console.log("You entered inside if block of the save button!");
+      // console.log("You entered inside if block of the save button!");
       if (getQuantity > 0) {
-      console.log("Starting update quantity's product process!");
+      // console.log("Starting update quantity's product process!");
       const newQuantity = await db.query("UPDATE cart SET productquantity = $1  WHERE productname = $2 AND clientemail = $3 AND productdescription = $4", 
         [getQuantity, getName.trim(), getEmail, getDescription.trim()]);
-      console.log("The value of the newQuantity is: ", newQuantity);
-      console.log("Starting process of possible duplicated cart products...");
+      // console.log("The value of the newQuantity is: ", newQuantity);
+      // console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
         [getName.trim(), getEmail, getQuantity, getDescription.trim()]);
-      console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
+      // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
           [getName.trim(), getEmail, getQuantity, getDescription.trim()]);
-        console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
+        // console.log("Duplicated products deleted! Check de lenght:  ", deleteDuplicated.rows.length);
         const insertIndividual = db.query(
           "INSERT INTO cart (productname, clientemail, productquantity, productdescription, productprice) VALUES ($1, $2, $3, $4, $5)",
           [getName.trim(), getEmail, getQuantity, getDescription.trim(), getPrice]
         );
-        console.log("The insertIndividual var's length value is: ", insertIndividual);
+        // console.log("The insertIndividual var's length value is: ", insertIndividual);
       }
     } else {
-      console.log("Invalid value to be updated!");
+      // console.log("Invalid value to be updated!");
     } 
     }  if (req.body.submitButton == 'delete') {
       // console.log("You entered in else block of the delete button!");
@@ -245,7 +263,7 @@ app.post("/cartItems", async (req, res) => {
       // console.log("Starting process of possible duplicated cart products...");
       const possibleDuplicated = await db.query("SELECT * FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
         [getName.trim(), userEmail.trim(), getQuantity, getDescription.trim()]);
-      console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
+      // console.log("The possibleDuplicated var's length value is: ", possibleDuplicated.rows.length);
       if (possibleDuplicated.rows.length > 1) {
         // console.log("INSIDE IF BLOCK STATMENT DUPLCATED");
         const deleteDuplicated = await db.query("DELETE FROM cart WHERE productname = $1 AND clientemail = $2 AND productquantity = $3 AND productdescription = $4", 
@@ -278,7 +296,7 @@ app.post("/cartItems", async (req, res) => {
 //universal var to stock client's cart
 let totalCart = 0;
 let productsCart = [];
-let xRequest = null;
+// let xRequest = null;
 //recovring the client's cart
 app.get("/cart", async (req, res) => {
   //client identified
@@ -300,7 +318,7 @@ app.get("/cart", async (req, res) => {
     // console.log("We are starting the checkout's construction process. For while, the idPreference = ", idPreference);
     if (recoveryCart.rows.length > 0) {
     // console.log("The cart of the user ", userEmail, " was recovered: ", recoveryCart );
-    const client = new MercadoPagoConfig({ accessToken: 'APP_USR-8205492202804430-042816-46f0a127eb6cd45626571eb4761a961b-830882078' });
+    const client = new MercadoPagoConfig({ accessToken: 'TEST-8205492202804430-042816-0c963d4089e0a19b82c6a03d5d0d71a3-830882078' });
     const preference = new Preference(client);
     let items = [
       // {
@@ -319,6 +337,7 @@ app.get("/cart", async (req, res) => {
       // console.log("The product founded's quantity is: ", recoveryCart.rows[i]['productquantity']);
       // console.log("The dolar sign was getted out of the money's value: ", recoveryCart.rows[i]['productprice']);
       items.push({
+        id: '00000',
         title: recoveryCart.rows[i]['productname'],
         quantity:  recoveryCart.rows[i]['productquantity'],
         unit_price: recoveryCart.rows[i]['productprice']
@@ -336,16 +355,32 @@ app.get("/cart", async (req, res) => {
     //     unit_price: 10
     //   }
     // ];
-     
+      const d = new Date();
+      let today = d.toISOString();
+      let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString();
       const resultPreference = await preference.create({
           body: {
+            binary_mode: true,
+            operation_type: 'regular_payment',
             payment_methods: {
             excluded_payment_methods: [],
             excluded_payment_types: [],
-            installments: 12
+            installments: 12,
+            default_installments: 1
             },     
             items,
-            notification_url: 'http://test.com'
+            back_urls: {
+              "success": "http://localhost:3000/success",
+              "failure": "http://localhost:3000/failed",
+              "pending": "http://localhost:3000/pending"
+            },
+            auto_return: "approved",
+            // expires: true,
+            // expiration_date_from: today,
+            // expiration_date_to: tomorrow,
+            payer: {
+            email: userEmail
+            }
           }
         });
 
@@ -354,7 +389,7 @@ app.get("/cart", async (req, res) => {
         // console.log("SECOND LINE 2!"); 
         // console.log("resultPreference['id'] pleas? ", resultPreference['id']);
         console.log("The resultPreference's value is: ", resultPreference);
-        xRequest = resultPreference['api_response']['headers']['x-request-id'];
+        // xRequest = resultPreference['api_response']['headers']['x-request-id'];
         idPreference = resultPreference['id'];
         // const options = {
         //   offset: 0,
@@ -366,7 +401,7 @@ app.get("/cart", async (req, res) => {
         // console.log( "CONST SEARCHED VLAUE: ", searched );
         // console.log("The seached value is: ", searched);
         // const idPreference = (searched['elements'][0]['id']);
-        console.log("The idPreference is: ", idPreference);
+        // console.log("The idPreference is: ", idPreference);
       } else {
         // "The render checkout was not consumed because the cart is empty!"
       }
@@ -401,6 +436,25 @@ app.get("/cart", async (req, res) => {
     // console.log("Sorry! You arent authenticated!");
     res.redirect('/login');
   }
+});
+
+let idPayment = null;
+app.get('/success', function (req, res) {
+  idPayment =  req.query.payment_id;
+  console.log("You are in success block get! the idPayment's value is: ", idPayment);
+	res.json({
+		Payment: req.query.payment_id,
+		Status: req.query.status,
+		MerchantOrder: req.query.merchant_order_id
+	});
+});
+
+app.get('/pending', function (req, res) {
+	res.redirect('/checkout');
+});
+
+app.get('/failed', function (req, res) {
+	res.redirect('/checkout');
 });
 
 app.get("/login", (req, res) => {
@@ -466,9 +520,9 @@ app.get("/accepted", async (req, res) => {
 
 //array product
 let item = [
-  { id: 1, name: "Estopa Automotiva para Polimento", description: "4 Quilogramas" , url_img: 'img/estopa-carro.jpg', price: "0.01" },
-  { id: 2, name: "Mini Kit Fusível Automotivo", description: "20 Kits" , url_img: 'img/mini-fusivel.jpg', price: "19.99" },
-  { id: 3, name: "Parafusos Plásticos de 8mm", description: "2000 Unidades" , url_img: 'img/parafuso-plastico.jpg', price: "29.99" },
+  { id: 1, name: "Estopa Automotiva p/ Polimento", description: "4 Quilogramas" , url_img: 'img/estopa-carro.jpg', price: "5.00" },
+  { id: 2, name: "Mini Kit Fusível Automotivo", description: "20 Kits" , url_img: 'img/mini-fusivel.jpg', price: "10.00" },
+  { id: 3, name: "Parafusos Plásticos de 8mm", description: "2000 Unidades" , url_img: 'img/parafuso-plastico.jpg', price: "15.00" },
   { id: 4, name: "Palheta Automotiva", description: "600 Unidades" , url_img: 'img/palheta-automotiva.jpg', price: "39.99" },
   { id: 5, name: "Aditivos para Sistema de Arrefecimento", description: "720 Unidades" , url_img: 'img/sistema-arrefecimento.jpg', price: "49.99" },
   { id: 6, name: "Jogo de Tapete Automotivo Universal", description: "800 Unidades" , url_img: 'img/jogo-de-tapete-universal-automotivo.jpg', price: "59.99" },
@@ -522,7 +576,7 @@ app.post("/product", async (req, res) => {
 app.post("/cart", async (req, res) => {
   if (req.isAuthenticated()) {
     //block identified
-    console.log("Hey! You are in cart's POST BLOCK!");
+    // console.log("Hey! You are in cart's POST BLOCK!");
     let idCart = 0; 
     //inserting user with query sql on cart's client databse 
     // console.log("Inserting product on client's cart...");

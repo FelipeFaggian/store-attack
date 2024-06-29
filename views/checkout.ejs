@@ -1,6 +1,7 @@
 <%- include('partials/header') %>
 
 
+
   <!-- body products -->
 <!-- <div style="" id="container"> -->
   <ul style="margin-left: -20px;" class="checkout">
@@ -56,22 +57,34 @@
    <div id="container" style="display: flex; align-items: center; justify-content: center;">
         <div style=" margin: auto;" class="" id="">
             <!-- PIX BUTTON -->
-             <form class="checkout" action="/pix" method="POST" style="margin: 20px;">
-                  <button class="checkout" style=" padding: 10px; font-weight: 900; border-radius: 5px; font-size: x-large;">Pagar com PIX</button>
-             </form>
-                <!-- SDK Payment (excluded) -->
-                <!-- <div id="wallet_container" class="checkout" style=""></div>
+             <!-- <form class="checkout" action="/pix" method="POST" style="margin: 20px;">
+                  <button class="checkout" style=" padding: 10px; font-weight: 900; border-radius: 5px; font-size: x-large; margin-left: 25px;">Pagar com PIX</button>
+             </form> -->
+              <!-- CREDIT BUTTON -->
+             <!-- <form class="checkout" action="/formCard" method="POST" style="margin: 20px;">
+                <button class="checkout" style=" padding: 10px; font-weight: 900; border-radius: 5px; font-size: x-large;">Pagar com Crédito</button>
+           </form> -->
+                <!-- SDK Payment  -->
+                <div id="wallet_container" class="checkout" style=""></div>
                 <script>
                     const mp = new MercadoPago('TEST-94cbcad2-f10d-4e1a-929a-1985dea7543e', {
                     locale: 'pt-BR'
                     });
         
                     mp.bricks().create("wallet", "wallet_container", {
+                        
                     initialization: {
                         preferenceId: "<%=  idPreference %>",
                     },
+                    customization: {
+                        paymentMethods: {
+                            // ...,
+                            creditCard: "all",
+                        },
+                    },
+                  
                     }); 
-                </script> -->
+                </script>
         </div>
     </div>
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
