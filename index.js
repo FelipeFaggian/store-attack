@@ -388,7 +388,7 @@ app.get("/cart", async (req, res) => {
         // .catch(console.log);
         // console.log("SECOND LINE 2!"); 
         // console.log("resultPreference['id'] pleas? ", resultPreference['id']);
-        console.log("The resultPreference's value is: ", resultPreference);
+        // console.log("The resultPreference's value is: ", resultPreference);
         // xRequest = resultPreference['api_response']['headers']['x-request-id'];
         idPreference = resultPreference['id'];
         // const options = {
